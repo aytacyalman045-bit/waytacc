@@ -1,84 +1,26 @@
-/* WAYTAC SİBER TERMİNAL TASARIMI */
-body { 
-    background-color: #050505; 
-    color: #00ff00; 
-    font-family: 'Courier New', Courier, monospace; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
-    margin: 0; 
-    overflow: hidden;
-}
+/* WAYTAC İMPARATORLUK PANELİ TASARIMI */
+body { background: #050505; color: #00ff00; font-family: 'Courier New', monospace; display: flex; margin: 0; height: 100vh; overflow: hidden; }
 
-.terminal { 
-    background: #000; 
-    border: 1px solid #00ff00; 
-    padding: 30px; 
-    box-shadow: 0 0 25px #00ff00; 
-    width: 90%; 
-    max-width: 500px; 
-    text-align: center;
-    border-radius: 5px;
-}
+.sidebar { width: 260px; background: #000; border-right: 2px solid #00ff00; padding: 25px; display: flex; flex-direction: column; box-shadow: 5px 0 15px rgba(0, 255, 0, 0.2); }
+.sidebar h2 { color: #fff; text-shadow: 0 0 10px #00ff00; letter-spacing: 3px; font-size: 24px; margin-bottom: 30px; }
 
-header h1 { 
-    font-size: 20px; 
-    letter-spacing: 2px; 
-    margin-bottom: 5px;
-}
+nav { display: flex; flex-direction: column; }
+nav a { color: #00ff00; text-decoration: none; padding: 15px; margin: 8px 0; border: 1px solid transparent; transition: all 0.3s ease; cursor: pointer; font-size: 14px; text-transform: uppercase; }
+nav a:hover { border: 1px solid #00ff00; background: rgba(0, 255, 0, 0.15); box-shadow: 0 0 15px #00ff00; transform: scale(1.05); }
 
-header p { 
-    font-size: 12px; 
-    color: #888; 
-    margin-bottom: 25px;
-}
+.vip-link { color: #ff00ff !important; font-weight: bold; border: 1px solid #ff00ff !important; }
+.vip-link:hover { box-shadow: 0 0 20px #ff00ff !important; background: rgba(255, 0, 255, 0.1) !important; color: #fff !important; }
 
-.sorgu-box { 
-    margin-bottom: 20px; 
-}
+.status-bar { margin-top: auto; font-size: 12px; color: #888; border-top: 1px solid #333; padding-top: 15px; }
+.online { color: #00ff00; text-shadow: 0 0 5px #00ff00; animation: blink 1s infinite; }
 
-input { 
-    background: #111; 
-    border: 1px solid #00ff00; 
-    color: #00ff00; 
-    padding: 12px; 
-    width: 65%; 
-    outline: none; 
-    font-family: 'Courier New', monospace;
-}
+main { flex: 1; padding: 60px; background: radial-gradient(circle at center, #111 0%, #000 100%); overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; }
+.page { animation: fadeIn 0.6s ease-in-out; width: 100%; max-width: 700px; }
 
-button { 
-    background: #00ff00; 
-    color: #000; 
-    border: none; 
-    padding: 12px 20px; 
-    cursor: pointer; 
-    font-weight: bold; 
-    text-transform: uppercase; 
-    transition: 0.3s; 
-    margin-left: -5px;
-}
+.sorgu-card { background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff00; padding: 40px; box-shadow: 0 0 30px rgba(0, 255, 0, 0.3); border-radius: 10px; }
+input { background: #0a0a0a; border: 1px solid #00ff00; color: #00ff00; padding: 15px; width: 100%; margin-bottom: 20px; outline: none; font-family: 'Courier New', monospace; box-sizing: border-box; }
+button { background: #00ff00; color: #000; border: none; padding: 15px 30px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+button:hover { background: #fff; box-shadow: 0 0 20px #fff; }
 
-button:hover { 
-    background: #fff; 
-    box-shadow: 0 0 20px #fff; 
-}
-
-#output { 
-    margin-top: 20px; 
-    text-align: left; 
-    font-size: 14px; 
-    line-height: 1.6; 
-    border-top: 1px solid #333; 
-    padding-top: 15px; 
-    min-height: 100px;
-}
-
-.online { 
-    color: #00ff00; 
-    text-shadow: 0 0 10px #00ff00; 
-    animation: blink 1s infinite; 
-}
-
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes blink { 50% { opacity: 0; } }
