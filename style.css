@@ -1,40 +1,38 @@
-/* Mobil Menü Butonu (3 Çizgi) */
-.menu-toggle {
-    display: none; /* Masaüstünde gizle */
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    background: #1c2128;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 1100;
-    border: 1px solid #30363d;
+/* style.css */
+body {
+    margin: 0; background-color: #0d1117; color: white;
+    font-family: sans-serif; display: flex;
 }
 
-/* Arka Plan Karartma */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    z-index: 999;
+/* Sidebar Tasarımı */
+.sidebar {
+    width: 260px; height: 100vh; background: #11151c;
+    border-right: 1px solid #30363d; padding: 20px;
+    position: fixed; left: 0; top: 0;
 }
 
-/* Mobil Görünüm Ayarları */
-@media (max-width: 768px) {
-    .menu-toggle { display: block; } /* Mobilde butonu göster */
-    
-    .sidebar {
-        left: -260px; /* Menüyü ekranın dışına at */
-        transition: 0.3s;
-        z-index: 1000;
-    }
-    
-    .sidebar.active { left: 0; } /* Aktif olunca içeri al */
-    .overlay.active { display: block; }
-    
-    main { margin-left: 0 !important; } /* İçeriği tam ekran yap */
+.menu-section a, .dropbtn {
+    display: block; padding: 12px; color: #8b949e;
+    text-decoration: none; font-size: 14px;
+    background: none; border: none; width: 100%; text-align: left;
+    cursor: pointer; border-radius: 8px;
 }
+
+.menu-section a:hover, .dropbtn:hover { background: #1f2937; color: white; }
+
+.dropdown-content { display: none; padding-left: 20px; }
+
+/* Ana İçerik Alanı */
+main { margin-left: 260px; width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+.stat-card {
+    background: #161b22; border: 1px solid #30363d;
+    padding: 40px; border-radius: 20px; text-align: left; max-width: 500px;
+}
+
+.stats-grid div {
+    background: #1f2937; padding: 15px; border-radius: 12px; border: 1px solid #30363d;
+}
+
+/* Mobil Menü Gizleme (Sidebar'ın beyaz liste gibi görünmesini engeller) */
+.menu-toggle { display: none; }
