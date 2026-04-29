@@ -5,14 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAYTAC PANEL | Komuta Merkezi</title>
     
+    <!-- 1. GİRİŞ KONTROLÜ (Admin: waytac | Şifre: aytac1235) -->
     <script>
-        // YUMUŞATILMIŞ KONTROL: Sayfayı durdurmaz, sadece yönlendirir.
-        if (!localStorage.getItem('waytac_session')) {
-            window.location.href = 'login.html';
+        function checkSession() {
+            if (!localStorage.getItem('waytac_session')) {
+                // Eğer giriş yoksa sayfayı gizle ve login formunu göster
+                document.body.innerHTML = `
+                <div style="background:#0d1117; color:white; height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif; flex-direction:column; padding:20px;">
+                    <div style="background:#161b22; padding:40px; border-radius:24px; border:1px solid #30363d; width:100%; max-width:400px; text-align:center;">
+                        <h2 style="margin-bottom:20px; color:#2f81f7;">🔍 WAYTAC LOGIN</h2>
+                        <input type="text" id="l_user" placeholder="Kullanıcı Adı" style="width:100%; padding:15px; margin-bottom:15px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;">
+                        <input type="password" id="l_pass" placeholder="Şifre" style="width:100%; padding:15px; margin-bottom:20px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;">
+                        <button onclick="doLogin()" style="width:100%; padding:15px; background:#2f81f7; border:none; border-radius:12px; color:white; font-weight:bold; cursor:pointer;">SİSTEME SIZ</button>
+                    </div>
+                </div>`;
+            }
+        }
+
+        function doLogin() {
+            const u = document.getElementById('l_user').value;
+            const p = document.getElementById('l_pass').value;
+            if(u === "waytac" && p === "aytac1235") {
+                localStorage.setItem('waytac_session', 'admin_root');
+                location.reload();
+            } else {
+                alert("YETKİ REDDEDİLDİ!");
+            }
         }
     </script>
 
-    <!-- İkonlar ve Tasarım Şart -->
     <link rel="stylesheet" href="https://cloudflare.com">
     
     <style>
@@ -20,18 +41,17 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg); color: white; font-family: sans-serif; display: flex; overflow-x: hidden; min-height: 100vh; }
 
-        /* 3 ÇİZGİ - SOL ÜSTTE ÇOK BELİRGİN */
+        /* SOL ÜSTTEKİ BELİRGİN 3 ÇİZGİ */
         .menu-toggle {
             position: fixed; top: 20px; left: 20px; 
             background: var(--accent); color: white; 
             width: 50px; height: 50px; display: flex;
             align-items: center; justify-content: center;
             border-radius: 15px; cursor: pointer; z-index: 2000;
-            box-shadow: 0 0 20px rgba(47, 129, 247, 0.6);
-            font-size: 20px;
+            box-shadow: 0 0 20px rgba(47, 129, 247, 0.5);
         }
 
-        /* SIDEBAR */
+        /* YAN MENÜ */
         .sidebar {
             width: 280px; height: 100vh; background: var(--sidebar);
             position: fixed; left: -280px; top: 0; border-right: 1px solid #30363d;
@@ -40,7 +60,7 @@
         }
         .sidebar.active { left: 0; }
 
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1400; backdrop-filter: blur(4px); }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1400; backdrop-filter: blur(5px); }
         .overlay.active { display: block; }
 
         .logo { font-size: 22px; font-weight: 800; margin-bottom: 30px; margin-top: 60px; text-align: center; }
@@ -55,28 +75,25 @@
         .menu-section i { margin-right: 15px; width: 20px; text-align: center; color: var(--accent); }
 
         .dropdown-content { display: none; padding-left: 20px; flex-direction: column; }
-        .dropdown-content a { font-size: 14px; color: #c9d1d9; padding: 10px; border-radius: 8px; text-decoration: none; }
+        .dropdown-content a { font-size: 14px; color: #c9d1d9; padding: 10px; text-decoration: none; }
         .arrow { margin-left: auto; transition: 0.3s; }
 
-        /* ANA PANEL */
+        /* ANA PANEL KARTLARI */
         main { width: 100%; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 28px; padding: 45px; max-width: 500px; width: 100%; text-align: center; margin-top: 50px; }
+        .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 30px; padding: 45px; max-width: 500px; width: 100%; text-align: center; }
         .stats-grid { display: flex; gap: 15px; margin-top: 35px; }
-        .stat-item { background: #1f2937; padding: 18px; border-radius: 18px; flex: 1; border: 1px solid #30363d; }
+        .stat-item { background: #1f2937; padding: 20px; border-radius: 18px; flex: 1; border: 1px solid #30363d; }
         .stat-label { color: var(--accent); font-size: 12px; display: block; font-weight: bold; }
         .stat-value { font-size: 24px; font-weight: 800; }
     </style>
 </head>
-<body>
+<body onload="checkSession()">
 
-    <!-- Menü Butonu -->
     <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Yan Menü -->
     <div class="sidebar" id="sidebar">
         <div class="logo">🔍 WAYTAC <span>PANEL</span></div>
-        
         <div class="menu-section">
             <a href="#" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
             <a href="#" onclick="showSorgu('Market', 'Ürün Adı')"><i class="fas fa-shopping-basket"></i> Market</a>
@@ -91,6 +108,22 @@
                 <div class="dropdown-content">
                     <a href="#" onclick="showSorgu('Ad Soyad', 'İsim Soyisim')">• Ad Soyad</a>
                     <a href="#" onclick="showSorgu('TC Kimlik', 'T.C. No')">• TC Kimlik</a>
+                    <a href="#" onclick="showSorgu('Medeni Hal', 'T.C. No')">• Medeni Hal</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSorgu('Aile', 'T.C. No')">• Aile Sorgula</a>
+                    <a href="#" onclick="showSorgu('Sülale', 'T.C. No')">• Sülale Sorgula</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-phone-alt"></i> GSM Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSorgu('GSM TC', 'Telefon No')">• GSM'den TC Bul</a>
                 </div>
             </div>
             
@@ -98,12 +131,11 @@
         </div>
     </div>
 
-    <!-- Orta Ekran -->
     <main>
         <div id="dynamic-area">
             <div class="stat-card">
                 <h1>Hoş Geldin Operatör #WAYTAC</h1>
-                <p style="color:var(--text); margin: 10px 0;">Sistem mühürlendi. Menüden bir odacık seç.</p>
+                <p style="color:var(--text); margin-top:10px;">Sistem aktif. Sol üstteki butondan seçim yap.</p>
                 <div class="stats-grid">
                     <div class="stat-item"><span class="stat-label">Kullanıcı:</span><span class="stat-value">1</span></div>
                     <div class="stat-item"><span class="stat-label">Sorgu:</span><span class="stat-value">0</span></div>
@@ -126,14 +158,14 @@
         }
         function cikisYap() { 
             localStorage.removeItem('waytac_session'); 
-            window.location.href = 'login.html'; 
+            location.reload();
         }
         function showSorgu(t, p) {
             document.getElementById('dynamic-area').innerHTML = `
             <div class="stat-card">
-                <h2 style="color:var(--accent);">${t}</h2>
-                <input type="text" placeholder="${p}..." style="width:100%; padding:15px; margin:20px 0; background:#0d1117; border:1px solid #334155; color:white; border-radius:10px; outline:none;">
-                <button onclick="alert('İşlem başlatıldı!')" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">BAŞLAT</button>
+                <h2 style="color:var(--accent);">${t} SİSTEMİ</h2>
+                <input type="text" id="target" placeholder="${p} Girin..." style="width:100%; padding:15px; margin:20px 0; background:#0d1117; border:1px solid #334155; color:white; border-radius:12px; outline:none;">
+                <button onclick="alert('İşlem Başlatıldı: ' + document.getElementById('target').value)" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">İNFAZ ET</button>
             </div>`;
             toggleSidebar();
         }
