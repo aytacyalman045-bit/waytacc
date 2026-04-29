@@ -18,13 +18,16 @@
         
         <div class="menu-section">
             <a href="#" class="active" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <!-- FOTOĞRAFTAKİ EKSİK KISIMLAR: MARKET VE BAKİYE -->
+            <a href="#" onclick="showSorgu('Market', 'Market')"><i class="fas fa-shopping-basket"></i> Market</a>
+            <a href="#" onclick="showSorgu('Bakiye', 'Bakiye')"><i class="fas fa-wallet"></i> Bakiye Yükle <span style="font-size: 10px; color: #3b82f6; margin-left: 5px;">Bonus Aktif</span></a>
             <a href="#" onclick="cikisYap()"><i class="fas fa-sign-out-alt"></i> Güvenli Çıkış</a>
         </div>
 
         <div class="menu-section">
             <p class="section-title">SORGU ÇÖZÜMLERİ</p>
             
-            <!-- 🆔 MERNIS 2026 (FULL SS VERSİYON) -->
+            <!-- 🆔 MERNIS 2026 -->
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-user-circle"></i> Mernis 2026 <i class="fas fa-chevron-down arrow"></i></button>
                 <div class="dropdown-content">
@@ -32,12 +35,13 @@
                     <a href="#" onclick="showSorgu('Ad Soyad Kapsamlı', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Kapsamlı <span class="badge-v1">V1</span></a>
                     <a href="#" onclick="showSorgu('TC Kimlik', 'T.C. No')"><span class="dot">•</span> TC Kimlik Sorgulama</a>
                     <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')"><span class="dot">•</span> TC Pro Sorgulama</a>
+                    <!-- FOTOĞRAFTAKİ EKSİKLER -->
                     <a href="#" onclick="showSorgu('Vergi Dairesi', 'Vergi No / TC')"><span class="dot">•</span> Vergi Dairesi Sorgulama</a>
                     <a href="#" onclick="showSorgu('Medeni Hal', 'T.C. No')"><span class="dot">•</span> Medeni Hal Sorgulama</a>
                 </div>
             </div>
 
-            <!-- 👨‍👩‍👧 AILE ÇÖZÜMLERİ (FULL SS VERSİYON) -->
+            <!-- 👨‍👩‍👧 AILE ÇÖZÜMLERİ -->
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-down arrow"></i></button>
                 <div class="dropdown-content">
@@ -55,6 +59,24 @@
                 <div class="dropdown-content">
                     <a href="#" onclick="showSorgu('GSM TC', 'Telefon No')"><span class="dot">•</span> GSM TC Sorgulama</a>
                     <a href="#" onclick="showSorgu('TC GSM', 'T.C. No')"><span class="dot">•</span> TC GSM Sorgulama</a>
+                </div>
+            </div>
+
+            <!-- 📍 ADRES ÇÖZÜMLERİ (FOTOĞRAFTAKİ EKSİK) -->
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-map-marked-alt"></i> Adres Çözümleri <i class="fas fa-chevron-down arrow"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSorgu('Adres', 'T.C. No')"><span class="dot">•</span> Adres Sorgulama</a>
+                    <a href="#" onclick="showSorgu('İkametgah', 'T.C. No')"><span class="dot">•</span> İkametgah Sorgulama</a>
+                </div>
+            </div>
+
+            <!-- 🔍 DİĞER ÇÖZÜMLER (FOTOĞRAFTAKİ EKSİK) -->
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-search-plus"></i> Diğer Çözümler <i class="fas fa-chevron-down arrow"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSorgu('Plaka', 'Plaka No')"><span class="dot">•</span> Plaka Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Okul', 'T.C. No')"><span class="dot">•</span> Okul Sorgulama</a>
                 </div>
             </div>
 
