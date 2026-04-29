@@ -1,32 +1,19 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; height: 100vh; }
 
-.top-header { background: #1e293b; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; z-index: 100; }
-.header-right { display: flex; gap: 20px; align-items: center; color: #94a3b8; }
-.notif span { background: #22c55e; color: #fff; font-size: 10px; padding: 2px 5px; border-radius: 50%; }
+.menu-toggle { position: fixed; top: 15px; left: 15px; font-size: 24px; color: #3b82f6; cursor: pointer; z-index: 1000; background: #111827; padding: 10px; border-radius: 8px; border: 1px solid #3b82f6; }
 
-.sidebar { width: 300px; background: #111827; border-right: 1px solid #1f2937; height: 100vh; position: fixed; left: -300px; transition: 0.3s; padding: 20px; z-index: 99; }
+.sidebar { width: 280px; background: #111827; height: 100vh; position: fixed; left: -280px; transition: 0.3s; padding: 20px; z-index: 999; border-right: 1px solid #1f2937; }
 .sidebar.active { left: 0; }
-.logo { font-size: 22px; font-weight: bold; color: #3b82f6; margin-bottom: 30px; }
-.section-title { font-size: 11px; color: #4b5563; font-weight: bold; margin: 20px 0 10px 10px; }
+.logo { font-size: 22px; font-weight: bold; color: #3b82f6; margin-bottom: 30px; margin-top: 50px; }
 
-.dropbtn, .menu-section a { 
-    display: flex; align-items: center; width: 100%; padding: 14px 18px; 
-    background: rgba(255,255,255,0.02); border: none; color: #9ca3af; border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: 0.3s; text-decoration: none;
-}
-.dropbtn:hover, .menu-section a:hover { background: #1f2937; color: #fff; border-left: 3px solid #3b82f6; }
-.dropdown-content { display: none; background: #0f172a; padding-left: 20px; border-left: 1px solid #3b82f6; margin-bottom: 15px; }
-.dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; display: block; text-decoration: none; }
+.dropbtn, .menu-section a { display: flex; align-items: center; width: 100%; padding: 14px; background: #1e293b; border: 1px solid #334155; color: #9ca3af; border-radius: 10px; margin-bottom: 8px; cursor: pointer; text-decoration: none; }
+.dropdown-content { display: none; background: #0f172a; padding-left: 15px; border-left: 2px solid #3b82f6; }
 .show { display: block !important; }
 
-main { padding: 80px 30px 30px 30px; flex: 1; overflow-y: auto; }
-.reklam-box { background: #000; border: 1px solid #334155; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 30px; }
+main { padding: 80px 20px; flex: 1; overflow-y: auto; }
 .stat-card { background: #1e293b; border: 1px solid #334155; padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 .trend { border: 1px solid #3b82f6; color: #3b82f6; padding: 2px 8px; border-radius: 6px; font-size: 12px; float: right; }
 .blue { color: #3b82f6; font-weight: bold; }
-
-/* SORGU FORMU STİLİ */
-.sorgu-form { background: #1e293b; padding: 30px; border-radius: 15px; border: 1px solid #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); }
 input { width: 100%; padding: 15px; background: #0f172a; border: 1px solid #3b82f6; color: #fff; border-radius: 8px; margin-bottom: 20px; }
-button.infaz-btn { width: 100%; padding: 15px; background: #3b82f6; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-button.infaz-btn:hover { background: #2563eb; box-shadow: 0 0 20px #3b82f6; }
+.infaz-btn { width: 100%; padding: 15px; background: #3b82f6; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
