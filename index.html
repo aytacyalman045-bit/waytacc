@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>WAYTAC | SORGÜ VE İNFAZ TERMİNALİ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <header>
+            <h1>🐉 WAYTAC OPERATIONAL INTERFACE v3.0</h1>
+            <p>System Status: <span class="online">ONLINE</span> | Power: %83</p>
+        </header>
+        <section class="sorgu-box">
+            <input type="text" placeholder="T.C. Kimlik veya Kullanıcı Adı Giriniz..." id="target">
+            <button onclick="infaz()">SORGULA & İNFAZ ET</button>
+        </section>
+        <div id="output"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
