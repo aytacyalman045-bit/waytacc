@@ -3,76 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAYTAC PANEL | Siber Komuta Merkezi</title>
+    <title>WAYTAC PANEL | Canlı Komuta Merkezi</title>
     <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ÜST BAR -->
-    <div class="top-header">
-        <div class="header-left"><i class="fas fa-bars" onclick="toggleSidebar()"></i></div>
-        <div class="header-right">
-            <i class="fas fa-sun"></i>
-            <div class="notif"><i class="fas fa-bell"></i> <span>1</span></div>
-            <div class="user-pfp">👤</div>
-        </div>
+    <!-- 3 ÇİZGİ MENÜ BUTONU -->
+    <div class="menu-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
     </div>
 
     <!-- YAN MENÜ -->
     <div class="sidebar" id="sidebar">
         <div class="logo">🔍 WAYTAC <span>PANEL</span></div>
-        
         <div class="menu-section">
             <a href="#" class="active" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
-            <a href="#"><i class="fas fa-user-circle"></i> Profilim</a>
         </div>
-
         <div class="menu-section">
-            <p class="section-title">SORGU ÇÖZÜMLERİ</p>
-            <!-- MERNIS 2026 -->
+            <p class="section-title">SORGU ODACIKLARI</p>
             <div class="dropdown">
                 <button class="dropbtn" onclick="toggleDropdown('mernis-sub')">
-                    <i class="fas fa-database"></i> Mernis 2026 <i class="fas fa-chevron-right arrow"></i>
+                    <i class="fas fa-database"></i> Mernis 2026 <i class="fas fa-chevron-down arrow"></i>
                 </button>
                 <div id="mernis-sub" class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Ad Soyad', 'Ad Soyad')">• Ad Soyad Sorgulama</a>
-                    <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')">• TC Pro Sorgulama <span class="badge-v1">V1</span></a>
-                    <a href="#" onclick="showSorgu('Medeni Hal', 'T.C. No')">• Medeni Hal Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Ad Soyad', 'Ad Soyad')">• Ad Soyad</a>
+                    <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')">• TC Pro <span class="badge">V1</span></a>
                 </div>
             </div>
-
-            <!-- AILE -->
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown('aile-sub')">
-                    <i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-right arrow"></i>
-                </button>
-                <div id="aile-sub" class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Aile', 'T.C. No')">• Aile Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Sülale', 'T.C. No')">• Sülale Sorgulama</a>
-                </div>
-            </div>
-
-            <a href="#" onclick="showSorgu('GSM', 'Telefon No')"><i class="fas fa-phone-alt"></i> GSM Çözümleri</a>
-            <a href="#" class="premium"><i class="fas fa-crown"></i> Premium Çözümler</a>
+            <a href="#" onclick="showSorgu('GSM', 'Telefon No')"><i class="fas fa-phone"></i> GSM Çözümleri</a>
         </div>
-        <div class="status-bar">⚡ Güç: %66 | <span class="online">WAYTAC_ACTIVE</span></div>
+        <div class="status-bar">⚡ Güç: %65 | <span class="online">WAYTAC_ACTIVE</span></div>
     </div>
 
-    <!-- ANA İŞLEM ALANI -->
     <main id="main-content">
-        <div id="dynamic-area" class="page-content">
-            <!-- REKLAM VE STATS -->
+        <div id="dynamic-area">
             <div class="reklam-box">REKLAM ALANI <br><small>Bu alan #WAYTAC operasyonları için ayrılmıştır</small></div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <p>Toplam Kullanıcı</p>
-                    <h3>35.361 <span class="trend">↝ 100%</span></h3>
-                    <small>Bugün <span class="blue">2189</span> yeni kayıt</small>
+                    <h3><span id="total-users">35361</span> <span class="trend">↝ 100%</span></h3>
+                    <small>Bugün <span class="blue" id="today-users">2189</span> yeni kayıt</small>
                 </div>
                 <div class="stat-card">
                     <p>Sorgu Sayısı</p>
-                    <h3>521.845 <span class="trend">↝ 100%</span></h3>
-                    <small>Sistemde <span class="blue">521.708</span> sorgu yapıldı</small>
+                    <h3><span id="total-queries">521845</span> <span class="trend">↝ 100%</span></h3>
+                    <small>Sistemde <span class="blue" id="total-done">521708</span> sorgu yapıldı</small>
                 </div>
             </div>
         </div>
