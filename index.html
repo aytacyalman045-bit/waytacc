@@ -1,5 +1,5 @@
 <script>
-    // Oturum kontrolü: Giriş yapılmamışsa login.html'e yönlendirir
+    // Oturum Kontrolü: Giriş yapılmamışsa login.html'e yönlendirir
     if(!localStorage.getItem('waytac_session')) { window.location.href = 'login.html'; }
 </script>
 <!DOCTYPE html>
@@ -12,35 +12,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
-    
+
+    <!-- 3 Çizgili Menü Butonu (Mobil İçin) -->
+    <div class="menu-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Menü Açıldığında Arka Planı Karartmak İçin Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
     <div class="sidebar" id="sidebar">
+        <!-- Logo -->
         <div class="logo">🔍 NOPANEL</div>
         
+        <!-- Üst Menü -->
         <div class="menu-section">
             <a href="#" class="active" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
-            <a href="#"><i class="fas fa-shopping-basket"></i> Market</a>
-            <a href="#"><i class="fas fa-wallet"></i> Bakiye Yükle <span style="font-size: 10px; color: #3b82f6; margin-left: 5px;">Bonus Aktif</span></a>
+            <a href="#" onclick="showSorgu('Market', 'Ürün Adı')"><i class="fas fa-shopping-basket"></i> Market</a>
+            <a href="#" onclick="showSorgu('Bakiye', 'Miktar')"><i class="fas fa-wallet"></i> Bakiye Yükle <span class="badge-bonus" style="color: #3b82f6; font-size: 10px; margin-left: 5px;">Bonus Aktif</span></a>
             <a href="#" onclick="cikisYap()"><i class="fas fa-sign-out-alt"></i> Güvenli Çıkış</a>
         </div>
 
         <div class="menu-section">
             <p class="section-title">SORGU ÇÖZÜMLERİ</p>
             
-            <!-- MERNIS 2026 -->
+            <!-- 🆔 MERNIS 2026 -->
             <div class="dropdown">
-                <button class="dropbtn"><i class="fas fa-user-circle"></i> Mernis 2026 <i class="fas fa-chevron-down arrow"></i></button>
+                <button class="dropbtn"><i class="fas fa-user-circle"></i> Mernis 2026 <i class="fas fa-chevron-right arrow"></i></button>
                 <div class="dropdown-content">
                     <a href="#" onclick="showSorgu('Ad Soyad', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Ad Soyad Kapsamlı', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Kapsamlı <span class="badge-v1">V1</span></a>
+                    <a href="#" onclick="showSorgu('Ad Soyad Kapsamlı', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Kapsamlı <span class="badge-v1" style="background:#1e40af; font-size:10px; padding:2px 5px; border-radius:4px;">V1</span></a>
                     <a href="#" onclick="showSorgu('TC Kimlik', 'T.C. No')"><span class="dot">•</span> TC Kimlik Sorgulama</a>
                     <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')"><span class="dot">•</span> TC Pro Sorgulama</a>
-                    <a href="#"><span class="dot">•</span> Vergi Dairesi Sorgulama</a>
-                    <a href="#"><span class="dot">•</span> Medeni Hal Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Vergi Dairesi', 'Vergi No / TC')"><span class="dot">•</span> Vergi Dairesi Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Medeni Hal', 'T.C. No')"><span class="dot">•</span> Medeni Hal Sorgulama</a>
                 </div>
             </div>
 
-            <!-- AILE ÇÖZÜMLERİ -->
+            <!-- 👨‍👩‍👧 AILE ÇÖZÜMLERİ -->
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
                 <div class="dropdown-content">
@@ -49,42 +58,58 @@
                 </div>
             </div>
 
-            <!-- GSM ÇÖZÜMLERİ -->
+            <!-- 📱 GSM ÇÖZÜMLERİ -->
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-phone-alt"></i> GSM Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
                 <div class="dropdown-content">
                     <a href="#" onclick="showSorgu('GSM TC', 'Telefon No')"><span class="dot">•</span> GSM TC Sorgulama</a>
+                    <a href="#" onclick="showSorgu('TC GSM', 'T.C. No')"><span class="dot">•</span> TC GSM Sorgulama</a>
                 </div>
             </div>
 
-            <!-- ADRES ÇÖZÜMLERİ (YENİ) -->
+            <!-- 📍 ADRES ÇÖZÜMLERİ -->
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-map-marker-alt"></i> Adres Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSorgu('Adres', 'T.C. No')"><span class="dot">•</span> Adres Sorgulama</a>
+                    <a href="#" onclick="showSorgu('İşyeri', 'T.C. No')"><span class="dot">•</span> İşyeri Sorgulama</a>
+                </div>
             </div>
 
-            <!-- DİĞER ÇÖZÜMLER (YENİ) -->
+            <!-- 🔍 DİĞER ÇÖZÜMLER -->
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-search"></i> Diğer Çözümler <i class="fas fa-chevron-right arrow"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showSorgu('Plaka', 'Plaka No')"><span class="dot">•</span> Plaka Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Okul', 'T.C. No')"><span class="dot">•</span> Okul Sorgulama</a>
+                </div>
             </div>
 
-            <a href="#" class="premium"><i class="fas fa-crown"></i> Premium Odacık</a>
+            <a href="#" class="premium" style="color: #fbbf24;"><i class="fas fa-crown"></i> Premium Odacık</a>
         </div>
-        <div class="status-bar">⚡ Güç: %51 | <span class="online">WAYTAC_ACTIVE</span></div>
+        
+        <!-- Alt Durum Çubuğu -->
+        <div class="status-bar" style="position: absolute; bottom: 20px; font-size: 11px; color: #6b7280;">
+            ⚡ Güç: %51 | <span class="online" style="color: #10b981; font-weight: bold;">WAYTAC_ACTIVE</span>
+        </div>
     </div>
 
+    <!-- Ana İçerik Alanı -->
     <main id="main-content">
         <div id="dynamic-area">
             <div class="stat-card">
-                <h1>Hoş Geldin Operatör #WAYTAC</h1>
-                <p>Sistem mühürlendi. Sol menüden bir odacık seçerek siber infazı başlat.</p>
-                <div class="stats-grid" style="display:flex; justify-content:center; gap:20px; margin-top:30px;">
-                    <div style="background:#1f2937; padding:15px 25px; border-radius:12px; border:1px solid #374151;">
-                        <span style="color:#3b82f6; display:block; font-size:12px;">Kullanıcı:</span>
-                        <span style="color:#60a5fa; font-weight:bold; font-size:18px;">35.361</span>
+                <h1 style="font-size: 28px; margin-bottom: 10px;">Hoş Geldin Operatör #WAYTAC</h1>
+                <p style="color: #94a3b8; font-size: 14px;">Sistem mühürlendi. Sol menüden bir odacık seçerek siber infazı başlat.</p>
+                
+                <!-- Görseldeki İstatistik Kutuları -->
+                <div class="stats-grid" style="display:flex; justify-content:center; gap:15px; margin-top:30px;">
+                    <div style="background:#1f2937; padding:15px 25px; border-radius:15px; border:1px solid #374151; min-width: 120px;">
+                        <span style="color:#3b82f6; display:block; font-size:12px; margin-bottom: 5px;">Kullanıcı:</span>
+                        <span id="total-users" style="color:#60a5fa; font-weight:bold; font-size:18px;">35.361</span>
                     </div>
-                    <div style="background:#1f2937; padding:15px 25px; border-radius:12px; border:1px solid #374151;">
-                        <span style="color:#3b82f6; display:block; font-size:12px;">Sorgu:</span>
-                        <span style="color:#60a5fa; font-weight:bold; font-size:18px;">521.845</span>
+                    <div style="background:#1f2937; padding:15px 25px; border-radius:15px; border:1px solid #374151; min-width: 120px;">
+                        <span style="color:#3b82f6; display:block; font-size:12px; margin-bottom: 5px;">Sorgu:</span>
+                        <span id="total-queries" style="color:#60a5fa; font-weight:bold; font-size:18px;">521.845</span>
                     </div>
                 </div>
             </div>
