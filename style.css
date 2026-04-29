@@ -1,0 +1,84 @@
+/* WAYTAC SİBER TERMİNAL TASARIMI */
+body { 
+    background-color: #050505; 
+    color: #00ff00; 
+    font-family: 'Courier New', Courier, monospace; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+    overflow: hidden;
+}
+
+.terminal { 
+    background: #000; 
+    border: 1px solid #00ff00; 
+    padding: 30px; 
+    box-shadow: 0 0 25px #00ff00; 
+    width: 90%; 
+    max-width: 500px; 
+    text-align: center;
+    border-radius: 5px;
+}
+
+header h1 { 
+    font-size: 20px; 
+    letter-spacing: 2px; 
+    margin-bottom: 5px;
+}
+
+header p { 
+    font-size: 12px; 
+    color: #888; 
+    margin-bottom: 25px;
+}
+
+.sorgu-box { 
+    margin-bottom: 20px; 
+}
+
+input { 
+    background: #111; 
+    border: 1px solid #00ff00; 
+    color: #00ff00; 
+    padding: 12px; 
+    width: 65%; 
+    outline: none; 
+    font-family: 'Courier New', monospace;
+}
+
+button { 
+    background: #00ff00; 
+    color: #000; 
+    border: none; 
+    padding: 12px 20px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    transition: 0.3s; 
+    margin-left: -5px;
+}
+
+button:hover { 
+    background: #fff; 
+    box-shadow: 0 0 20px #fff; 
+}
+
+#output { 
+    margin-top: 20px; 
+    text-align: left; 
+    font-size: 14px; 
+    line-height: 1.6; 
+    border-top: 1px solid #333; 
+    padding-top: 15px; 
+    min-height: 100px;
+}
+
+.online { 
+    color: #00ff00; 
+    text-shadow: 0 0 10px #00ff00; 
+    animation: blink 1s infinite; 
+}
+
+@keyframes blink { 50% { opacity: 0; } }
