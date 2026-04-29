@@ -3,66 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAYTAC PANEL | Giriş Kapısı</title>
+    <title>WAYTAC PANEL | Güvenlik Kapısı</title>
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body { background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: #1e293b; padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid #334155; }
-        h1 { color: #3b82f6; margin-bottom: 10px; font-size: 24px; }
-        input { width: 100%; padding: 15px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 8px; margin-bottom: 15px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background: #3b82f6; border: none; color: #fff; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn:hover { background: #2563eb; box-shadow: 0 0 15px #3b82f6; }
-        .footer-link { margin-top: 20px; font-size: 13px; color: #94a3b8; cursor: pointer; }
-        .cloudflare-sim { background: #fff; color: #000; padding: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 11px; font-weight: bold; }
+        .login-card { background: #1e293b; padding: 35px; border-radius: 15px; width: 100%; max-width: 400px; text-align: center; border: 1px solid #334155; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        h1 { color: #3b82f6; font-size: 26px; margin-bottom: 5px; letter-spacing: 2px; }
+        .subtitle { color: #64748b; font-size: 14px; margin-bottom: 25px; }
+        input { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+        
+        /* CLOUDFLARE TURNSTILE SİMÜLASYONU */
+        .cf-verify { background: #111827; border: 1px solid #374151; padding: 12px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; text-align: left; }
+        .cf-loading { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #d1d5db; }
+        .cf-dots span { width: 4px; height: 4px; background: #22c55e; border-radius: 50%; display: inline-block; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.4; } }
+
+        .btn { width: 100%; padding: 15px; background: #3b82f6; border: none; color: #fff; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 15px; }
+        .btn:hover { background: #2563eb; box-shadow: 0 0 20px #3b82f6; }
+        .switch-text { margin-top: 20px; font-size: 13px; color: #94a3b8; cursor: pointer; }
+        .blue { color: #3b82f6; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="login-card" id="auth-box">
+    <div class="login-card">
         <h1>WAYTAC PANEL</h1>
-        <p id="auth-title" style="color:#94a3b8; margin-bottom:20px;">Hesabınıza giriş yapın</p>
+        <p id="title" class="subtitle">Hesabınıza giriş yapın</p>
         
-        <div class="cloudflare-sim">
-            <span style="color:#16a34a">✅ Doğrulandı</span>
-            <span>CLOUDFLARE TURNSTILE</span>
+        <div class="cf-verify">
+            <div class="cf-loading">
+                <div class="cf-dots"><span></span><span style="animation-delay:0.2s"></span><span style="animation-delay:0.4s"></span></div>
+                <span id="cf-text">Doğrulanıyor...</span>
+            </div>
+            <div style="font-size:9px; color:#4b5563; text-align:right;">CLOUDFLARE<br>TURNSTILE</div>
         </div>
 
-        <input type="text" id="user" placeholder="Kullanıcı Adı">
-        <input type="password" id="pass" placeholder="Şifre">
+        <div id="form-area">
+            <input type="text" id="user" placeholder="Kullanıcı Adı">
+            <input type="email" id="email" placeholder="E-posta Adresi" style="display:none;">
+            <input type="password" id="pass" placeholder="Şifre">
+            <button class="btn" onclick="handleAuth()" id="btn-text">Giriş Yap</button>
+        </div>
         
-        <button class="btn" onclick="handleAuth()" id="auth-btn">Giriş Yap</button>
-        
-        <p class="footer-link" onclick="switchAuth()" id="switch-btn">Hesabınız yok mu? Kayıt Ol</p>
+        <p class="switch-text" onclick="toggleMode()" id="switch-btn">Hesabınız yok mu? <span class="blue">Kayıt Ol</span></p>
     </div>
 
     <script>
         let isLogin = true;
+        
+        // CF Animasyonu
+        setTimeout(() => { document.getElementById('cf-text').innerText = "Doğrulandı"; }, 3000);
 
-        function switchAuth() {
+        function toggleMode() {
             isLogin = !isLogin;
-            document.getElementById('auth-title').innerText = isLogin ? "Hesabınıza giriş yapın" : "Yeni operatör kaydı oluştur";
-            document.getElementById('auth-btn').innerText = isLogin ? "Giriş Yap" : "Kayıt Ol";
-            document.getElementById('switch-btn').innerText = isLogin ? "Hesabınız yok mu? Kayıt Ol" : "Zaten hesabınız var mı? Giriş Yap";
+            document.getElementById('title').innerText = isLogin ? "Hesabınıza giriş yapın" : "Yeni operatör kaydı oluştur";
+            document.getElementById('email').style.display = isLogin ? "none" : "block";
+            document.getElementById('btn-text').innerText = isLogin ? "Giriş Yap" : "Kayıt Ol";
+            document.getElementById('switch-btn').innerHTML = isLogin ? "Hesabınız yok mu? <span class='blue'>Kayıt Ol</span>" : "Hesabınız var mı? <span class='blue'>Giriş Yap</span>";
         }
 
         function handleAuth() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
-            if(!u || !p) return alert("Bilgileri boş bırakma!");
+            const e = document.getElementById('email').value;
+
+            if(!u || !p || (!isLogin && !e)) return alert("Tüm alanları doldur!");
 
             if(isLogin) {
-                // Giriş Kontrolü
-                const savedPass = localStorage.getItem(u);
-                if(savedPass === p) {
-                    localStorage.setItem('waytac_session', u); // Giriş mühürü
+                const data = JSON.parse(localStorage.getItem(u));
+                if(data && data.pass === p) {
+                    // LOG TUTMA SİSTEMİ
+                    const log = `[${new Date().toLocaleString()}] Operatör ${u} sisteme sızdı.`;
+                    let logs = JSON.parse(localStorage.getItem('waytac_logs') || "[]");
+                    logs.push(log);
+                    localStorage.setItem('waytac_logs', JSON.stringify(logs));
+
+                    localStorage.setItem('waytac_session', u);
                     location.href = 'index.html';
-                } else {
-                    alert("Hatalı kullanıcı adı veya şifre!");
-                }
+                } else { alert("Erişim Reddedildi! Hatalı Bilgi."); }
             } else {
-                // Kayıt İşlemi
-                localStorage.setItem(u, p);
-                alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
-                switchAuth();
+                const userData = { pass: p, email: e, date: new Date().toLocaleDateString() };
+                localStorage.setItem(u, JSON.stringify(userData));
+                alert("Kayıt mühürlendi! Şimdi giriş yapabilirsin.");
+                toggleMode();
             }
         }
     </script>
