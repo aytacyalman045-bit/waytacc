@@ -1,25 +1,28 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #0f172a; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-/* MENÜ BUTONU */
 .menu-toggle { position: fixed; top: 15px; left: 15px; font-size: 24px; color: #3b82f6; cursor: pointer; z-index: 1001; background: #111827; padding: 10px; border-radius: 8px; border: 1px solid #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
 
-/* YAN MENÜ (SIDEBAR) - KAYAR YAPI */
-.sidebar { width: 280px; background: #111827; height: 100vh; position: fixed; left: -280px; top: 0; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 20px; z-index: 1000; border-right: 1px solid #1f2937; }
+.sidebar { width: 280px; background: #111827; height: 100vh; position: fixed; left: -280px; top: 0; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 20px; z-index: 1000; border-right: 1px solid #1f2937; overflow-y: auto; }
 .sidebar.active { left: 0; }
 
-/* KARARTMA KATMANI */
 .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 999; backdrop-filter: blur(3px); }
 .overlay.active { display: block; }
 
 .logo { font-size: 22px; font-weight: bold; color: #3b82f6; margin-bottom: 30px; margin-top: 50px; }
-.section-title { font-size: 11px; color: #4b5563; font-weight: bold; margin: 20px 0 10px 5px; }
-.dropbtn, .menu-section a { display: flex; align-items: center; width: 100%; padding: 14px; background: #1e293b; border: none; color: #9ca3af; border-radius: 10px; margin-bottom: 8px; cursor: pointer; text-decoration: none; font-size: 14px; }
-.dropdown-content { display: none; background: #0f172a; padding-left: 15px; border-left: 2px solid #3b82f6; }
+.section-title { font-size: 11px; color: #4b5563; font-weight: bold; margin: 25px 0 10px 5px; text-transform: uppercase; }
+
+.dropbtn, .menu-section a { display: flex; align-items: center; width: 100%; padding: 14px; background: #1e293b; border: 1px solid #334155; color: #9ca3af; border-radius: 10px; margin-bottom: 8px; cursor: pointer; text-decoration: none; font-size: 14px; }
+.dropbtn i, .menu-section a i { margin-right: 15px; color: #3b82f6; }
+.dropdown-content { display: none; background: #0f172a; padding-left: 15px; border-left: 2px solid #3b82f6; margin-bottom: 10px; }
+.dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; display: block; text-decoration: none; }
 .show { display: block !important; }
 
-/* MAIN CONTENT */
-main { padding: 80px 20px; transition: 0.4s; }
+.badge-v1 { background: #1e3a8a; color: #3b82f6; font-size: 10px; padding: 1px 6px; border-radius: 4px; margin-left: 10px; font-weight: bold; border: 1px solid #3b82f6; }
+.premium { color: #f59e0b !important; border-color: #f59e0b !important; }
+.premium i { color: #f59e0b !important; }
+
+main { padding: 80px 20px; flex: 1; }
 .stat-card { background: #1e293b; border: 1px solid #334155; padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 .blue { color: #3b82f6; font-weight: bold; }
 input { width: 100%; padding: 15px; background: #0f172a; border: 1px solid #3b82f6; color: #fff; border-radius: 8px; margin-bottom: 20px; }
