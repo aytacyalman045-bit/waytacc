@@ -2,27 +2,62 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>WAYTAC | MERNİS & İNFAZ TERMİNALİ</title>
+    <title>WAYTAC | NOPANEL COMMUNITY INTERFACE</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- YAN MENÜ (SIDEBAR) -->
     <div class="sidebar">
-        <h2>🐉 #WAYTAC</h2>
-        <nav>
-            <a href="#" onclick="showPage('dashboard')">🏠 Dashboard</a>
-            <a href="#" onclick="showPage('mernis')">🆔 Mernis Sorgu</a>
-            <a href="#" onclick="showPage('gsm')">📱 GSM Sorgu</a>
-            <a href="#" onclick="showPage('vip')" class="vip-link">💎 VIP Özel</a>
-            <a href="#" onclick="showPage('infaz')">💀 İnfaz Merkezi</a>
-        </nav>
-        <div class="status-bar">⚡ Power: %76 | <span class="online">ONLINE</span></div>
+        <div class="logo">🔍 NOPANEL</div>
+        
+        <div class="menu-section">
+            <a href="#" class="active" onclick="showPage('dashboard')"><span class="icon">🏠</span> Ana Sayfa</a>
+            <a href="#"><span class="icon">👤</span> Profilim</a>
+            <a href="#"><span class="icon">📊</span> Sıralamalar</a>
+        </div>
+
+        <div class="menu-section">
+            <p class="section-title">MARKET</p>
+            <a href="#"><span class="icon">🛍️</span> Market</a>
+            <a href="#"><span class="icon">💳</span> Bakiye Yükle <span class="badge">Bonus Aktif</span></a>
+        </div>
+
+        <div class="menu-section">
+            <p class="section-title">SORGU ÇÖZÜMLERİ</p>
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleMenu('mernis-sub')">👤 Mernis 2026 <span class="arrow">›</span></button>
+                <div id="mernis-sub" class="dropdown-content">
+                    <a href="#" onclick="showPage('mernis')">• Ad Soyad Sorgu</a>
+                    <a href="#">• TC Pro Sorgu <span class="badge">V1</span></a>
+                    <a href="#">• Vergi Dairesi</a>
+                </div>
+            </div>
+            <a href="#"><span class="icon">📞</span> GSM Çözümleri</a>
+            <a href="#" class="premium"><span class="icon">👑</span> Premium Çözümler</a>
+        </div>
+        <div class="status-bar">⚡ Power: %71 | <span class="online">ONLINE</span></div>
     </div>
-    <main id="content">
-        <div id="main-area" class="page">
-            <h1>Hoş Geldin Operatör</h1>
-            <p>Sistem mühürlendi. Sol menüden bir odacık seçerek infazı başlat.</p>
+
+    <!-- ANA İŞLEM ALANI -->
+    <main id="main-content">
+        <!-- Dashboard Kartları (Varsayılan) -->
+        <div id="dashboard" class="page active-page">
+            <div class="reklam-alani">REKLAM ALANI <br><small>Bu alan #WAYTAC operasyonları için ayrılmıştır</small></div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p>Toplam Kullanıcı</p>
+                    <div class="val-row"><h3>33.966</h3> <span class="trend">↝ 100%</span></div>
+                    <small>Bugün <span class="blue">791</span> yeni kayıt</small>
+                </div>
+                <div class="stat-card">
+                    <p>Aktif Kullanıcı</p>
+                    <div class="val-row"><h3>183</h3> <span class="trend">↝ 1%</span></div>
+                    <small>Bugün <span class="blue">2553</span> aktif</small>
+                </div>
+            </div>
         </div>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
