@@ -8,34 +8,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- PARLAYAN MENÜ BUTONU -->
-    <div class="menu-toggle" id="menuBtn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-    </div>
+    <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
 
-    <!-- KAYAR YAN MENÜ -->
     <div class="sidebar" id="sidebar">
         <div class="logo">🔍 WAYTAC <span>PANEL</span></div>
         <div class="menu-section">
             <a href="#" class="active" onclick="location.reload()"><i class="fas fa-home"></i> Dashboard</a>
         </div>
+
         <div class="menu-section">
             <p class="section-title">SORGU ODACIKLARI</p>
+            
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown('mernis-sub')">
-                    <i class="fas fa-database"></i> Mernis 2026 <i class="fas fa-chevron-down arrow"></i>
-                </button>
+                <button class="dropbtn" onclick="toggleDropdown('mernis-sub')"><i class="fas fa-database"></i> Mernis 2026 <i class="fas fa-chevron-down arrow"></i></button>
                 <div id="mernis-sub" class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Ad Soyad', 'Ad Soyad')">• Ad Soyad</a>
-                    <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')">• TC Pro <span class="badge">V1</span></a>
+                    <a href="#" onclick="showSorgu('Ad Soyad', 'Ad Soyad')">• Ad Soyad Sorgu</a>
+                    <a href="#" onclick="showSorgu('Kapsamlı', 'Ad Soyad')">• Kapsamlı <span class="badge-v1">V1</span></a>
+                    <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')">• TC Pro Sorgu</a>
+                    <a href="#" onclick="showSorgu('E-Okul', 'T.C. No')">• E-Okul Sorgu</a>
+                    <a href="#" onclick="showSorgu('Vergi', 'T.C. No')">• Vergi Dairesi</a>
                 </div>
             </div>
-            <a href="#" onclick="showSorgu('GSM', 'Telefon No')"><i class="fas fa-phone"></i> GSM Çözümleri</a>
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown('aile-sub')"><i class="fas fa-users"></i> Aile & Sülale <i class="fas fa-chevron-down arrow"></i></button>
+                <div id="aile-sub" class="dropdown-content">
+                    <a href="#" onclick="showSorgu('Aile', 'T.C. No')">• Aile Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Sülale', 'T.C. No')">• Sülale Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Soy Ağacı', 'T.C. No')">• Soy Ağacı</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown('gsm-sub')"><i class="fas fa-phone-alt"></i> GSM Çözümleri <i class="fas fa-chevron-down arrow"></i></button>
+                <div id="gsm-sub" class="dropdown-content">
+                    <a href="#" onclick="showSorgu('GSM TC', 'Telefon No')">• GSM-TC Sorgu</a>
+                    <a href="#" onclick="showSorgu('TC GSM', 'T.C. No')">• TC-GSM Sorgu</a>
+                </div>
+            </div>
+
+            <a href="#" onclick="showSorgu('Adres', 'T.C. No')"><i class="fas fa-map-marker-alt"></i> Adres Çözümleri</a>
+            <a href="#" class="premium" onclick="showSorgu('VIP', 'Hedef Veri')"><i class="fas fa-crown"></i> Premium Odacık</a>
         </div>
-        <div class="status-bar">⚡ Güç: %63 | <span class="online">WAYTAC_ACTIVE</span></div>
+        <div class="status-bar">⚡ Güç: %60 | <span class="online">WAYTAC_ACTIVE</span></div>
     </div>
 
-    <!-- KARARTMA KATMANI -->
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
     <main id="main-content">
@@ -45,12 +62,11 @@
                 <div class="stat-card">
                     <p>Toplam Kullanıcı</p>
                     <h3><span id="total-users">35361</span></h3>
-                    <small>Bugün <span class="blue">2189</span> yeni kayıt</small>
+                    <small>Bugün <span class="blue">2189</span> kayıt</small>
                 </div>
                 <div class="stat-card">
                     <p>Sorgu Sayısı</p>
                     <h3><span id="total-queries">521845</span></h3>
-                    <small>Sistemde <span class="blue">521708</span> sorgu yapıldı</small>
                 </div>
             </div>
         </div>
