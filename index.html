@@ -1,92 +1,126 @@
-<script>
-    if(!localStorage.getItem('waytac_session')) { window.location.href = 'login.html'; }
-</script>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAYTAC PANEL | Komuta Merkezi</title>
+    <!-- Font Awesome İkonları -->
     <link rel="stylesheet" href="https://cloudflare.com">
     
     <style>
-        /* TASARIM (CSS) - Dosya hatasını önlemek için burada */
-        :root { --bg: #0d1117; --sidebar: #11151c; --accent: #2f81f7; --text: #8b949e; --card: #161b22; }
-        body { margin: 0; background: var(--bg); color: white; font-family: sans-serif; display: flex; }
-        
-        .sidebar { width: 260px; height: 100vh; background: var(--sidebar); position: fixed; border-right: 1px solid #30363d; padding: 20px; z-index: 1000; transition: 0.3s; overflow-y: auto; }
-        .logo { font-size: 20px; font-weight: bold; color: white; margin-bottom: 25px; padding-left: 10px; }
+        /* --- 1. TASARIM (CSS) --- */
+        :root {
+            --bg: #0d1117;
+            --sidebar: #11151c;
+            --accent: #2f81f7;
+            --text-gray: #8b949e;
+            --card-bg: #161b22;
+            --hover: #1f2937;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: white; font-family: -apple-system, sans-serif; display: flex; overflow-x: hidden; }
+
+        /* Sidebar Masaüstü */
+        .sidebar {
+            width: 260px; height: 100vh; background: var(--sidebar);
+            position: fixed; left: 0; top: 0; border-right: 1px solid #30363d;
+            padding: 20px; z-index: 1000; transition: 0.3s; overflow-y: auto;
+        }
+
+        .logo { font-size: 22px; font-weight: bold; margin-bottom: 25px; padding-left: 10px; color: white; }
         .logo span { color: var(--accent); }
-        .section-title { color: var(--text); font-size: 11px; text-transform: uppercase; margin: 25px 0 10px 10px; }
 
-        .menu-section a, .dropbtn { display: flex; align-items: center; width: 100%; padding: 12px; color: var(--text); text-decoration: none; border-radius: 10px; background: none; border: none; cursor: pointer; text-align: left; font-size: 14px; transition: 0.2s; }
-        .menu-section a:hover, .dropbtn:hover { background: #1f2937; color: white; }
-        .menu-section i { margin-right: 12px; width: 18px; text-align: center; }
+        .section-title { color: var(--text-gray); font-size: 11px; text-transform: uppercase; margin: 20px 0 10px 10px; font-weight: 800; }
 
-        .dropdown-content { display: none; padding-left: 15px; }
+        /* Menü Linkleri */
+        .menu-section a, .dropbtn {
+            display: flex; align-items: center; width: 100%; padding: 12px;
+            color: var(--text-gray); text-decoration: none; border-radius: 10px;
+            background: none; border: none; cursor: pointer; text-align: left;
+            font-size: 14px; transition: 0.2s;
+        }
+        .menu-section a:hover, .dropbtn:hover, .menu-section a.active { background: var(--hover); color: white; }
+        .menu-section i { margin-right: 12px; width: 20px; text-align: center; }
+
+        /* Dropdown Alanı */
+        .dropdown-content { display: none; padding-left: 15px; margin-top: 5px; }
         .dot { color: #484f58; margin-right: 10px; }
         .arrow { margin-left: auto; font-size: 10px; transition: 0.3s; }
 
-        main { margin-left: 260px; width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 24px; padding: 40px; max-width: 480px; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-        
-        .stats-grid { display: flex; gap: 15px; margin-top: 30px; }
-        .stat-item { background: #1f2937; padding: 15px; border-radius: 15px; flex: 1; border: 1px solid #30363d; text-align: center; }
-        .stat-label { color: var(--accent); font-size: 12px; display: block; margin-bottom: 5px; }
-        .stat-value { font-size: 18px; font-weight: bold; color: white; }
+        /* Mobil Menü Butonu */
+        .menu-toggle {
+            position: fixed; top: 15px; right: 15px; background: #1c2128;
+            padding: 10px 15px; border-radius: 8px; cursor: pointer;
+            z-index: 1100; border: 1px solid #30363d; display: none;
+        }
 
-        .menu-toggle { position: fixed; top: 15px; right: 15px; background: #1c2128; padding: 10px 15px; border-radius: 8px; cursor: pointer; z-index: 1100; border: 1px solid #30363d; display: none; }
-        @media (max-width: 1024px) { .menu-toggle { display: block; } .sidebar { left: -260px; } .sidebar.active { left: 0; } main { margin-left: 0; } }
+        /* Karartma */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 999; }
+
+        /* Ana İçerik */
+        main { margin-left: 260px; width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .stat-card { background: var(--card-bg); border: 1px solid #30363d; border-radius: 24px; padding: 40px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .stat-card h1 { font-size: 28px; margin-bottom: 10px; }
+        
+        .stats-grid { display: flex; gap: 15px; margin-top: 25px; }
+        .stat-item { background: var(--hover); padding: 15px; border-radius: 15px; flex: 1; border: 1px solid #30363d; }
+        .stat-label { color: var(--accent); font-size: 12px; display: block; margin-bottom: 5px; }
+        .stat-value { font-size: 18px; font-weight: bold; }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 1024px) {
+            .menu-toggle { display: block; }
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .overlay.active { display: block; }
+            main { margin-left: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+    <!-- 1. Oturum Kontrolü -->
+    <script>
+        if(!localStorage.getItem('waytac_session')) { window.location.href = 'login.html'; }
+    </script>
 
+    <!-- 2. Mobil Bileşenler -->
+    <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- 3. Sidebar (Menü) -->
     <div class="sidebar" id="sidebar">
         <div class="logo">🔍 NO<span>PANEL</span></div>
         
         <div class="menu-section">
             <a href="#" class="active" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
             <a href="#" onclick="showSorgu('Market', 'Ürün')"><i class="fas fa-shopping-basket"></i> Market</a>
-            <a href="#" onclick="showSorgu('Bakiye', 'Miktar')"><i class="fas fa-wallet"></i> Bakiye Yükle <span style="font-size: 9px; color: var(--accent); margin-left: 5px;">Bonus Aktif</span></a>
+            <a href="#" onclick="showSorgu('Bakiye', 'Miktar')"><i class="fas fa-wallet"></i> Bakiye Yükle <span style="color:var(--accent); font-size:9px; margin-left:5px;">Bonus Aktif</span></a>
             <a href="#" onclick="cikisYap()"><i class="fas fa-sign-out-alt"></i> Güvenli Çıkış</a>
         </div>
 
         <div class="menu-section">
             <p class="section-title">SORGU ÇÖZÜMLERİ</p>
             
-            <!-- MERNIS -->
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-user-shield"></i> Mernis 2026 <i class="fas fa-chevron-right arrow"></i></button>
+                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-user-circle"></i> Mernis 2026 <i class="fas fa-chevron-right arrow"></i></button>
                 <div class="dropdown-content">
                     <a href="#" onclick="showSorgu('Ad Soyad', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Ad Soyad Kapsamlı', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Kapsamlı <span style="background:#1e40af; font-size:9px; padding:1px 4px; border-radius:3px; margin-left:4px;">V1</span></a>
+                    <a href="#" onclick="showSorgu('Ad Soyad Kapsamlı', 'Ad Soyad')"><span class="dot">•</span> Ad Soyad Kapsamlı</a>
                     <a href="#" onclick="showSorgu('TC Kimlik', 'T.C. No')"><span class="dot">•</span> TC Kimlik Sorgulama</a>
-                    <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')"><span class="dot">•</span> TC Pro Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Vergi Dairesi', 'Vergi No')"><span class="dot">•</span> Vergi Dairesi Sorgulama</a>
+                    <a href="#" onclick="showSorgu('Vergi Dairesi', 'Vergi/TC')"><span class="dot">•</span> Vergi Dairesi Sorgu</a>
                 </div>
             </div>
 
-            <!-- AILE -->
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Aile', 'T.C. No')"><span class="dot">•</span> Aile Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Sülale', 'T.C. No')"><span class="dot">•</span> Sülale Sorgulama</a>
-                </div>
-            </div>
-
-            <!-- GSM -->
             <div class="dropdown">
                 <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-phone-alt"></i> GSM Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('GSM TC', 'Telefon No')"><span class="dot">•</span> GSM TC Sorgulama</a>
-                    <a href="#" onclick="showSorgu('TC GSM', 'T.C. No')"><span class="dot">•</span> TC GSM Sorgulama</a>
+                    <a href="#" onclick="showSorgu('GSM -> TC', 'Telefon No')"><span class="dot">•</span> GSM -> TC Sorgula</a>
+                    <a href="#" onclick="showSorgu('TC -> GSM', 'T.C. No')"><span class="dot">•</span> TC -> GSM Sorgula</a>
                 </div>
             </div>
 
-            <!-- ADRES -->
             <div class="dropdown">
                 <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-map-marker-alt"></i> Adres Çözümleri <i class="fas fa-chevron-right arrow"></i></button>
                 <div class="dropdown-content">
@@ -98,11 +132,12 @@
         </div>
     </div>
 
+    <!-- 4. Ana İçerik Alanı -->
     <main>
         <div id="dynamic-area">
             <div class="stat-card">
-                <h1 style="font-size: 28px; margin: 0 0 10px;">Hoş Geldin Operatör #WAYTAC</h1>
-                <p style="color: var(--text); font-size: 14px;">Sistem mühürlendi. Sol menüden seçim yap.</p>
+                <h1>Hoş Geldin Operatör #WAYTAC</h1>
+                <p style="color: var(--text-gray);">Sistem mühürlendi. Siber infazı başlatmak için menüden seçim yap.</p>
                 <div class="stats-grid">
                     <div class="stat-item"><span class="stat-label">Kullanıcı:</span><span class="stat-value">35.361</span></div>
                     <div class="stat-item"><span class="stat-label">Sorgu:</span><span class="stat-value">521.845</span></div>
@@ -111,8 +146,13 @@
         </div>
     </main>
 
+    <!-- 5. Fonksiyonlar (JS) -->
     <script>
-        function toggleSidebar() { document.getElementById("sidebar").classList.toggle("active"); }
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
+            document.getElementById("overlay").classList.toggle("active");
+        }
+
         function toggleDrop(btn) {
             const content = btn.nextElementSibling;
             const arrow = btn.querySelector('.arrow');
@@ -120,15 +160,21 @@
             content.style.display = isOpen ? 'none' : 'block';
             arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
         }
-        function cikisYap() { localStorage.removeItem('waytac_session'); window.location.href = 'login.html'; }
-        function showSorgu(t, p) {
-            document.getElementById('dynamic-area').innerHTML = `
+
+        function cikisYap() {
+            localStorage.removeItem('waytac_session');
+            window.location.href = 'login.html';
+        }
+
+        function showSorgu(tip, place) {
+            const area = document.getElementById('dynamic-area');
+            area.innerHTML = `
             <div class="stat-card">
-                <h2 style="color:var(--accent); font-size:20px; margin-bottom:20px;"><i class="fas fa-terminal"></i> ${t} SİSTEMİ</h2>
-                <input type="text" placeholder="${p} Giriniz..." style="width:100%; padding:15px; box-sizing:border-box; background:#0d1117; border:1px solid #30363d; border-radius:10px; color:white; margin-bottom:15px; outline:none;">
-                <button style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">İNFAZ ET</button>
+                <h2 style="color:var(--accent); margin-bottom:20px;"><i class="fas fa-terminal"></i> ${tip} SİSTEMİ</h2>
+                <input type="text" placeholder="${place} Giriniz..." style="width:100%; padding:15px; background:var(--bg); border:1px solid #30363d; border-radius:10px; color:white; margin-bottom:15px; outline:none;">
+                <button onclick="alert('İşlem Başlatıldı!')" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">SORGULA & İNFAZ ET</button>
             </div>`;
-            if(window.innerWidth < 1024) toggleSidebar();
+            if (window.innerWidth < 1024) toggleSidebar();
         }
     </script>
 </body>
