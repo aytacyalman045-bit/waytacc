@@ -2,21 +2,27 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>WAYTAC | SORGÜ VE İNFAZ TERMİNALİ</title>
+    <title>WAYTAC | MERNİS & İNFAZ TERMİNALİ</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="terminal">
-        <header>
-            <h1>🐉 WAYTAC OPERATIONAL INTERFACE v3.0</h1>
-            <p>System Status: <span class="online">ONLINE</span> | Power: %83</p>
-        </header>
-        <section class="sorgu-box">
-            <input type="text" placeholder="T.C. Kimlik veya Kullanıcı Adı Giriniz..." id="target">
-            <button onclick="infaz()">SORGULA & İNFAZ ET</button>
-        </section>
-        <div id="output"></div>
+    <div class="sidebar">
+        <h2>🐉 #WAYTAC</h2>
+        <nav>
+            <a href="#" onclick="showPage('dashboard')">🏠 Dashboard</a>
+            <a href="#" onclick="showPage('mernis')">🆔 Mernis Sorgu</a>
+            <a href="#" onclick="showPage('gsm')">📱 GSM Sorgu</a>
+            <a href="#" onclick="showPage('vip')" class="vip-link">💎 VIP Özel</a>
+            <a href="#" onclick="showPage('infaz')">💀 İnfaz Merkezi</a>
+        </nav>
+        <div class="status-bar">⚡ Power: %76 | <span class="online">ONLINE</span></div>
     </div>
+    <main id="content">
+        <div id="main-area" class="page">
+            <h1>Hoş Geldin Operatör</h1>
+            <p>Sistem mühürlendi. Sol menüden bir odacık seçerek infazı başlat.</p>
+        </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
