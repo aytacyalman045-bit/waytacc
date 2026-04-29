@@ -2,62 +2,90 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>WAYTAC | NOPANEL COMMUNITY INTERFACE</title>
+    <title>WAYTAC PANEL | Siber Komuta Merkezi</title>
+    <!-- İKON KÜTÜPHANESİ -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- YAN MENÜ (SIDEBAR) -->
     <div class="sidebar">
-        <div class="logo">🔍 NOPANEL</div>
+        <div class="logo">🔍 WAYTAC <span>PANEL</span></div>
         
         <div class="menu-section">
-            <a href="#" class="active" onclick="showPage('dashboard')"><span class="icon">🏠</span> Ana Sayfa</a>
-            <a href="#"><span class="icon">👤</span> Profilim</a>
-            <a href="#"><span class="icon">📊</span> Sıralamalar</a>
+            <a href="#" class="active" onclick="showPage('dashboard')"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="#"><i class="fas fa-user-circle"></i> Profilim</a>
+            <a href="#"><i class="fas fa-chart-bar"></i> Sıralamalar</a>
         </div>
 
         <div class="menu-section">
             <p class="section-title">MARKET</p>
-            <a href="#"><span class="icon">🛍️</span> Market</a>
-            <a href="#"><span class="icon">💳</span> Bakiye Yükle <span class="badge">Bonus Aktif</span></a>
+            <a href="#"><i class="fas fa-shopping-basket"></i> Market</a>
+            <a href="#"><i class="fas fa-credit-card"></i> Bakiye Yükle <span class="badge-bonus">Bonus Aktif</span></a>
         </div>
 
         <div class="menu-section">
-            <p class="section-title">SORGU ÇÖZÜMLERİ</p>
+            <p class="section-title">SORGU ODACIKLARI</p>
+            <!-- MERNIS 2026 -->
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleMenu('mernis-sub')">👤 Mernis 2026 <span class="arrow">›</span></button>
+                <button class="dropbtn" onclick="toggleMenu('mernis-sub')">
+                    <i class="fas fa-database"></i> Mernis 2026 <i class="fas fa-chevron-right arrow"></i>
+                </button>
                 <div id="mernis-sub" class="dropdown-content">
-                    <a href="#" onclick="showPage('mernis')">• Ad Soyad Sorgu</a>
-                    <a href="#">• TC Pro Sorgu <span class="badge">V1</span></a>
-                    <a href="#">• Vergi Dairesi</a>
+                    <a href="#" onclick="showPage('mernis')">• Ad Soyad Sorgulama</a>
+                    <a href="#">• Ad Soyad Kapsamlı <span class="badge-v1">V1</span></a>
+                    <a href="#">• TC Pro Sorgulama</a>
                 </div>
             </div>
-            <a href="#"><span class="icon">📞</span> GSM Çözümleri</a>
-            <a href="#" class="premium"><span class="icon">👑</span> Premium Çözümler</a>
+
+            <!-- AILE -->
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleMenu('aile-sub')">
+                    <i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-right arrow"></i>
+                </button>
+                <div id="aile-sub" class="dropdown-content">
+                    <a href="#">• Aile Sorgulama</a>
+                    <a href="#">• Sülale Sorgulama</a>
+                </div>
+            </div>
+
+            <!-- GSM -->
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleMenu('gsm-sub')">
+                    <i class="fas fa-phone-alt"></i> GSM Çözümleri <i class="fas fa-chevron-right arrow"></i>
+                </button>
+                <div id="gsm-sub" class="dropdown-content">
+                    <a href="#">• GSM TC Sorgulama</a>
+                    <a href="#">• TC GSM Sorgulama</a>
+                </div>
+            </div>
+
+            <a href="#"><i class="fas fa-map-marked-alt"></i> Adres Çözümleri</a>
+            <a href="#"><i class="fas fa-search-dollar"></i> Diğer Çözümler</a>
+            <a href="#" class="premium"><i class="fas fa-crown"></i> Premium Çözümler</a>
         </div>
-        <div class="status-bar">⚡ Power: %71 | <span class="online">ONLINE</span></div>
+
+        <div class="menu-section">
+            <p class="section-title">DESTEK SİSTEMİ</p>
+            <a href="#"><i class="fas fa-headset"></i> Destek Sistemi <span class="badge-count">24</span></a>
+        </div>
+
+        <div class="status-bar">⚡ Güç: %70 | <span class="online">WAYTAC_ACTIVE</span></div>
     </div>
 
-    <!-- ANA İŞLEM ALANI -->
     <main id="main-content">
-        <!-- Dashboard Kartları (Varsayılan) -->
-        <div id="dashboard" class="page active-page">
-            <div class="reklam-alani">REKLAM ALANI <br><small>Bu alan #WAYTAC operasyonları için ayrılmıştır</small></div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <p>Toplam Kullanıcı</p>
-                    <div class="val-row"><h3>33.966</h3> <span class="trend">↝ 100%</span></div>
-                    <small>Bugün <span class="blue">791</span> yeni kayıt</small>
-                </div>
-                <div class="stat-card">
-                    <p>Aktif Kullanıcı</p>
-                    <div class="val-row"><h3>183</h3> <span class="trend">↝ 1%</span></div>
-                    <small>Bugün <span class="blue">2553</span> aktif</small>
+        <!-- Dashboard İçeriği -->
+        <div id="dashboard" class="page">
+            <div class="stat-card">
+                <h1>Hoş Geldin Operatör #WAYTAC</h1>
+                <p>Sistem mühürlendi. Sol menüden bir odacık seçerek siber infazı başlat.</p>
+                <div class="stats-row">
+                    <div class="mini-card">Kullanıcı: 33.966</div>
+                    <div class="mini-card">Aktif: 183</div>
                 </div>
             </div>
         </div>
     </main>
-
     <script src="script.js"></script>
 </body>
 </html>
+
