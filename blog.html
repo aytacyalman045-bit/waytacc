@@ -5,90 +5,92 @@
     <title>WAYTAC | SİBER İNFAZ ARŞİVİ</title>
     <style>
         :root { --bg: #05070a; --card: #161b22; --accent: #2f81f7; --text: #8b949e; --code: #0d1117; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; }
-        .header { text-align: center; padding: 50px 0; border-bottom: 2px solid var(--accent); margin-bottom: 50px; }
-        .header h1 { color: #fff; text-transform: uppercase; letter-spacing: 5px; margin: 0; font-size: 2.5em; }
-        .op-card { background: var(--card); border: 1px solid #30363d; border-radius: 15px; padding: 30px; margin-bottom: 40px; transition: 0.3s; }
-        .op-card:hover { border-color: var(--accent); box-shadow: 0 0 25px rgba(47, 129, 247, 0.15); }
-        .tag { color: var(--accent); font-weight: bold; font-size: 0.8em; border: 1px solid var(--accent); padding: 3px 10px; border-radius: 5px; text-transform: uppercase; }
-        h2 { color: #fff; margin: 20px 0 10px 0; font-size: 1.8em; }
-        .details { background: var(--code); border: 1px dashed #30363d; border-radius: 10px; padding: 20px; margin-top: 20px; }
-        .details b { color: var(--accent); }
-        code { color: #ff7b72; font-family: monospace; }
-        ul { padding-left: 20px; line-height: 1.6; }
-        .footer { text-align: center; padding: 40px; font-size: 0.8em; opacity: 0.4; }
+        body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; margin: 0; padding: 15px; }
+        .container { max-width: 800px; margin: auto; }
+        .header { text-align: center; padding: 50px 0; border-bottom: 2px solid var(--accent); margin-bottom: 40px; }
+        .header h1 { color: #fff; letter-spacing: 5px; margin: 0; font-size: 2.2em; }
+        
+        .accordion { background: var(--card); border: 1px solid #30363d; border-radius: 12px; margin-bottom: 15px; overflow: hidden; }
+        .acc-header { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .acc-header:hover { background: #1c2128; }
+        .acc-header h2 { margin: 0; font-size: 1.2em; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: var(--code); }
+        .tag { color: var(--accent); font-weight: bold; font-size: 0.7em; border: 1px solid var(--accent); padding: 2px 6px; border-radius: 4px; }
+        .inner-padding { padding: 20px; border-top: 1px solid #30363d; line-height: 1.6; }
+        .evidence-img { width: 100%; border: 1px solid #30363d; border-radius: 8px; margin-top: 15px; filter: grayscale(30%) contrast(110%); }
     </style>
 </head>
 <body>
+
     <div class="container">
         <div class="header">
             <h1>WAYTAC ARCHIVE</h1>
-            <p>Operasyonel İstihbarat ve Sistem Deşifre Kayıtları</p>
+            <p>Sistem Deşifre ve Operasyon Mahzenleri</p>
         </div>
 
-        <!-- 🛰️ OPERASYON 01: REXA API -->
-        <div class="op-card">
-            <span class="tag">DEŞİFRE</span>
-            <h2>🛰️ Rexa API Tünel Analizi</h2>
-            <p>Rexa altyapısının beslendiği ana damarlar deşifre edilerek karargaha mühürlendi.</p>
-            <div class="details">
-                <b>🔍 Teknik Detaylar:</b>
-                <ul>
-                    <li><b>Ana Tünel:</b> <code>arastir.sbs/api/</code></li>
-                    <li><b>Mermi 01:</b> <code>tc.php?tc=[HEDEF]</code> - Kimlik Mahzeni Sızması</li>
-                    <li><b>Mermi 02:</b> <code>sulale.php?tc=[HEDEF]</code> - Soyağacı Haritalandırma</li>
-                    <li><b>Durum:</b> Tüm tüneller WAYTAC Komuta Merkezi'ne canlı olarak mühürlendi.</li>
-                </ul>
+        <!-- 🛰️ ODA 1: REXALEAK -->
+        <div class="accordion">
+            <div class="acc-header" onclick="toggleAcc(this)">
+                <h2><span class="tag">DEŞİFRE</span> 🛰️ RexaLeak Operasyonu</h2>
+                <span>▼</span>
+            </div>
+            <div class="acc-content">
+                <div class="inner-padding">
+                    <b>🔍 Sızma Detayları:</b>
+                    <ul>
+                        <li><b>Açık Portlar:</b> Sunucunun kritik servis noktaları haritalandırıldı.</li>
+                        <li><b>Dosya Analizi:</b> API tünelleri ve dizin yapıları deşifre edildi.</li>
+                        <li><b>Ganimet:</b> Tüm mahzen girişleri WAYTAC paneline mühürlendi.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- 🛡️ OPERASYON 02: XSS & BEEF -->
-        <div class="op-card">
-            <span class="tag">INFECT</span>
-            <h2>🛡️ Web & Tarayıcı İnfazı (XSS)</h2>
-            <p>Web arayüzlerindeki sızıntılar üzerinden kullanıcı frekansları rehin alındı.</p>
-            <div class="details">
-                <b>☣️ Payload Analizi:</b>
-                <ul>
-                    <li><b>Yöntem:</b> Cross-Site Scripting (Reflected & Stored)</li>
-                    <li><b>Kod:</b> <code>&lt;script&gt;document.location='http://waytac.app;</code></li>
-                    <li><b>BeEF Köprüsü:</b> Kali Linux mahzenlerinden <b>Hook URL</b> ile tarayıcılar siber birer kuklaya dönüştürüldü.</li>
-                </ul>
+        <!-- 🛡️ ODA 2: KATEDRAM - GÖRSEL KANITLI -->
+        <div class="accordion">
+            <div class="acc-header" onclick="toggleAcc(this)">
+                <h2><span class="tag">INFECT</span> 🛡️ katedram.com Raporu</h2>
+                <span>▼</span>
+            </div>
+            <div class="acc-content">
+                <div class="inner-padding">
+                    <b>🧠 Beyin Ölümü Analizi:</b>
+                    <ul>
+                        <li><b>Siber Felç:</b> Sunucu "Mailer" sınıfı üzerinden kilitlenerek "Fatal Error" moduna alındı.</li>
+                        <li><b>Durum:</b> katedram.com sistem mimarisi tamamen siber enkaz haline getirildi.</li>
+                    </ul>
+                    <b>📸 Görsel Kanıt:</b>
+                    <img src="fatal_error.png" class="evidence-img" alt="Katedram Fatal Error">
+                </div>
             </div>
         </div>
 
-        <!-- 🐉 OPERASYON 03: DARK DRAGON -->
-        <div class="op-card">
-            <span class="tag">ENGINE</span>
-            <h2>🐉 Dark Dragon Karargah Kurulumu</h2>
-            <p>Efsanevi Dark Dragon mimarisinin tüm odaları siber birer titizlikle deşifre edildi.</p>
-            <div class="details">
-                <b>🏗️ Mimari Detaylar:</b>
-                <ul>
-                    <li><b>Kaynak:</b> GitHub Siber Mahzenleri</li>
-                    <li><b>Kurulum:</b> Termux-Kali üzerinde Manuel <code>bundle install</code> ve Ruby zırhlaması.</li>
-                    <li><b>Güç:</b> 59 odalı tam kapsamlı istihbarat motoru operatörün emrine verildi.</li>
-                </ul>
+        <!-- 💀 ODA 3: SLAYER -->
+        <div class="accordion">
+            <div class="acc-header" onclick="toggleAcc(this)">
+                <h2><span class="tag">INFO</span> 💀 slayer.com İstihbaratı</h2>
+                <span>▼</span>
+            </div>
+            <div class="acc-content">
+                <div class="inner-padding">
+                    <b>📊 Ganimet Odası:</b>
+                    <ul>
+                        <li><b>Deşifre:</b> IP blokları ve admin tünelleri haritalandırıldı.</li>
+                        <li><b>Mühür:</b> API frekansları operatörün terminaline 7/24 mühürlendi.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- 🔑 OPERASYON 04: AUTHORITY -->
-        <div class="op-card">
-            <span class="tag">AUTHORITY</span>
-            <h2>🔑 Admin Yetki Motoru</h2>
-            <p>Karargahın şah damarını koruyan nükleer güvenlik bariyerleri inşa edildi.</p>
-            <div class="details">
-                <b>🔐 Güvenlik Mührü:</b>
-                <ul>
-                    <li><b>Yetki Anahtarı:</b> <code>waytac / aytac1235</code></li>
-                    <li><b>Zırh:</b> LocalStorage tabanlı hayalet oturum yönetimi.</li>
-                    <li><b>Erişim:</b> Sadece yetkili operatörler mernis mahzenlerine giriş yapabilir.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer">© 2024 WAYTAC | TÜM SİBER HAKLARI SAKLIDIR.</div>
     </div>
+
+    <script>
+        function toggleAcc(header) {
+            const content = header.nextElementSibling;
+            const allContent = document.querySelectorAll('.acc-content');
+            allContent.forEach(item => { if(item !== content) item.style.maxHeight = null; });
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+        }
+    </script>
 </body>
 </html>
