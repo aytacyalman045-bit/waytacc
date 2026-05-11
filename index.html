@@ -2,15 +2,15 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     
-    // 🚀 AYTAÇ GERÇEK VERİ MOTORU (ARKA PLAN SİNYALİ)
+    // 🚀 AYTAÇ MUTLAK GERÇEK VERİ MOTORU (ARKA PLAN)
     if (url.searchParams.has("tip") && url.searchParams.has("hedef")) {
       const tip = url.searchParams.get("tip").toLowerCase();
       const hedef = url.searchParams.get("hedef");
-      
       let apiEndpoint = `https://arastir.sbs{tip}.php?tc=${hedef}&gsm=${hedef}`;
-      if (tip.includes("ad soyad")) {
+      
+      if (tip === "adsoyad") {
           const parts = hedef.split(' ');
-          apiEndpoint = `https://arastir.sbs{parts[0]}&soyadi=${parts[1] || ''}`;
+          apiEndpoint = `https://arastir.sbs{parts[0] || ''}&soyadi=${parts[1] || ''}`;
       }
 
       try {
@@ -24,7 +24,7 @@ export default {
       }
     }
 
-    // 🌪️ AYTAÇ PANEL TAM TASARIM (BİREBİR & KUSURSUZ)
+    // 🌪️ AYTAÇ PANEL TAM TASARIM (BİREBİR & EKSİKSİZ)
     const html = `
 <!DOCTYPE html>
 <html lang="tr">
@@ -37,99 +37,90 @@ export default {
         :root { --bg: #05070a; --sidebar: #0a0d14; --accent: #2f81f7; --text: #8b949e; --card: #10141c; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg); color: white; font-family: sans-serif; display: flex; overflow-x: hidden; min-height: 100vh; }
-        .menu-toggle { position: fixed; top: 25px; left: 25px; background: var(--accent); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; z-index: 2000; box-shadow: 0 0 15px rgba(47,129,247,0.5); }
-        .sidebar { width: 280px; height: 100vh; background: var(--sidebar); position: fixed; left: -280px; top: 0; border-right: 1px solid #1e293b; padding: 25px; z-index: 1500; transition: 0.3s; overflow-y: auto; }
-        .sidebar.active { left: 0; }
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1400; backdrop-filter: blur(5px); }
-        .overlay.active { display: block; }
-        .logo { font-size: 22px; font-weight: 800; margin-bottom: 35px; margin-top: 50px; text-align: center; }
+        .sidebar { width: 280px; height: 100vh; background: var(--sidebar); border-right: 1px solid #1e293b; padding: 25px; overflow-y: auto; position: fixed; left: 0; }
+        .logo { font-size: 22px; font-weight: 800; margin-bottom: 35px; text-align: center; }
         .logo span { color: var(--accent); }
-        .menu-section a, .dropbtn { display: flex; align-items: center; width: 100%; padding: 12px; color: var(--text); text-decoration: none; border-radius: 10px; background: none; border: none; cursor: pointer; font-size: 14px; margin-bottom: 2px; text-align: left; }
-        .menu-section a:hover, .dropbtn:hover { background: #1f2937; color: white; }
-        .menu-section i { margin-right: 12px; width: 18px; text-align: center; color: var(--accent); }
-        .dropdown-content { display: none; padding-left: 20px; flex-direction: column; background: rgba(255,255,255,0.02); border-radius: 8px; margin-bottom: 5px; }
+        .menu-section p { font-size: 10px; color: #444; margin: 15px 0 5px 10px; text-transform: uppercase; font-weight: bold; }
+        .menu-item, .dropbtn { display: flex; align-items: center; width: 100%; padding: 12px; color: var(--text); text-decoration: none; border-radius: 10px; background: none; border: none; cursor: pointer; font-size: 14px; margin-bottom: 2px; text-align: left; }
+        .menu-item:hover, .dropbtn:hover { background: #1f2937; color: white; }
+        .menu-item i, .dropbtn i { margin-right: 12px; width: 18px; color: var(--accent); }
+        .dropdown-content { display: none; padding-left: 20px; flex-direction: column; background: rgba(255,255,255,0.02); border-radius: 8px; }
         .dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; border-radius: 8px; text-decoration: none; }
-        main { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 30px; padding: 40px; max-width: 550px; width: 100%; text-align: center; }
+        main { flex: 1; margin-left: 280px; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 30px; padding: 40px; width: 100%; max-width: 550px; text-align: center; }
+        .input-box { width: 100%; padding: 16px; margin: 20px 0; background: #0d1117; border: 1px solid #334155; color: white; border-radius: 12px; outline: none; text-align: center; }
+        .btn { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; }
         #terminal-log { background: #000; color: #2f81f7; font-family: monospace; font-size: 11px; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: left; height: 100px; overflow-y: auto; display: none; }
-        .result-box { background: #1a1f26; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 4px solid #2f81f7; display: none; white-space: pre-wrap; font-family: monospace; font-size: 12px; overflow-x: auto; }
+        .result-box { background: #1a1f26; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 4px solid var(--accent); display: none; overflow-x: auto; white-space: pre-wrap; font-size: 12px; font-family: monospace; }
     </style>
 </head>
 <body onload="checkSession()">
     <script>
         function checkSession() {
-            const session = localStorage.getItem('waytac_session');
-            if (!session) {
-                document.body.innerHTML = \`<div id="auth-container" style="background:#05070a; color:white; height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif; flex-direction:column; padding:20px;"><div id="login-box" style="background:#161b22; padding:40px; border-radius:24px; border:1px solid #30363d; width:100%; max-width:400px; text-align:center;"><h2 style="margin-bottom:20px; color:#2f81f7;">🔍 WAYTAC LOGIN</h2><input type="text" id="l_user" placeholder="Admin" style="width:100%; padding:15px; margin-bottom:15px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;"><input type="password" id="l_pass" placeholder="Şifre" style="width:100%; padding:15px; margin-bottom:20px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;"><button onclick="doLogin()" style="width:100%; padding:15px; background:#2f81f7; border:none; border-radius:12px; color:white; font-weight:bold; cursor:pointer; width:100%;">SİSTEME SIZ</button></div></div>\`;
+            if (!localStorage.getItem('waytac_session')) {
+                document.body.innerHTML = '<div style="background:black; color:white; height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column;"><h2>🔱 AYTAÇ LOGIN</h2><input type="password" id="pw" placeholder="Şifre" style="padding:10px; margin:10px; border-radius:5px;"><button onclick="if(document.getElementById(\\'pw\\').value===\\'aytac1235\\'){localStorage.setItem(\\'waytac_session\\',\\'waytac\\');location.reload()}">SİSTEME SIZ</button></div>';
             }
         }
-        function doLogin() { 
-            const u = document.getElementById('l_user').value; const p = document.getElementById('l_pass').value;
-            if(u === "waytac" && p === "aytac1235") { localStorage.setItem('waytac_session', u); location.reload(); } else { alert("❌ Hatalı Giriş!"); }
-        }
     </script>
-
-    <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
-    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar">
         <div class="logo">🔍 WAYTAC <span>PANEL</span></div>
         <div class="menu-section">
-            <a href="#" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
-            <p style="font-size:10px; color:#444; margin:15px 0 5px 10px; text-transform:uppercase; font-weight:bold;">Siber İstihbarat</p>
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-fingerprint"></i> Mernis 2026 <i class="fas fa-chevron-right" style="margin-left:auto"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('adsoyad', 'İsim Soyisim')">• Ad Soyad</a>
-                    <a href="#" onclick="showSorgu('tc', 'T.C. No')">• TC Kimlik</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-phone-alt"></i> GSM <i class="fas fa-chevron-right" style="margin-left:auto"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('gsmtc', 'Telefon No')">• GSM TC</a>
-                    <a href="#" onclick="showSorgu('tcgsm', 'T.C. No')">• TC GSM</a>
-                </div>
-            </div>
-            <a href="#" onclick="localStorage.removeItem('waytac_session'); location.reload();"><i class="fas fa-power-off"></i> Çıkış Yap</a>
+            <p>Mernis 2026</p>
+            <div class="menu-item" onclick="setMode('adsoyad', 'Ad Soyad', 'İsim Soyisim...')"><i class="fas fa-user"></i> Ad Soyad</div>
+            <div class="menu-item" onclick="setMode('tc', 'TC Sorgu', 'T.C. No...')"><i class="fas fa-fingerprint"></i> TC Kimlik</div>
+            <p>Aile Çözümleri</p>
+            <div class="menu-item" onclick="setMode('sulale', 'Sülale Sorgu', 'T.C. No...')"><i class="fas fa-users"></i> Sülale</div>
+            <p>GSM Çözümleri</p>
+            <div class="menu-item" onclick="setMode('gsmtc', 'GSM TC', 'Telefon (0 olmadan)...')"><i class="fas fa-phone"></i> GSM TC</div>
+            <div class="menu-item" onclick="setMode('tcgsm', 'TC GSM', 'T.C. No...')"><i class="fas fa-phone-alt"></i> TC GSM</div>
+            <p>Adres Çözümleri</p>
+            <div class="menu-item" onclick="setMode('adres', 'Adres Sorgu', 'T.C. No...')"><i class="fas fa-map-marker-alt"></i> Adres</div>
         </div>
     </div>
-
     <main>
-        <div id="dynamic-area">
-            <div class="stat-card">
-                <h1>Operatör <span style="color:#2f81f7;">#WAYTAC</span></h1>
-                <p style="color:#8b949e; margin-top:10px;">Bağlantı başarılı. Gerçek veri damarları aktif.</p>
-            </div>
+        <div class="stat-card">
+            <h2 id="mode-title" style="color:var(--accent);">AD SOYAD SİSTEMİ</h2>
+            <input type="text" id="target" class="input-box" placeholder="İsim Soyisim...">
+            <button onclick="startInfaz()" class="btn">İNFAZ ET</button>
+            <div id="terminal-log"></div>
+            <div id="result-box" class="result-box"></div>
         </div>
     </main>
-
     <script>
-        function toggleSidebar() { document.getElementById("sidebar").classList.toggle("active"); document.getElementById("overlay").classList.toggle("active"); }
-        function toggleDrop(btn) { const content = btn.nextElementSibling; content.style.display = content.style.display === 'flex' ? 'none' : 'flex'; }
+        let currentMode = 'adsoyad';
+        function setMode(m, t, p) { currentMode = m; document.getElementById('mode-title').innerText = t.toUpperCase(); document.getElementById('target').placeholder = p; }
         
-        function showSorgu(t, p) {
-            document.getElementById('dynamic-area').innerHTML = \`<div class="stat-card"><h2 style="color:#2f81f7;">\${t.toUpperCase()} SİSTEMİ</h2><input type="text" id="target" placeholder="\${p}..." style="width:100%; padding:16px; margin:20px 0; background:#0d1117; border:1px solid #334155; color:white; border-radius:12px; outline:none; text-align:center;"><button onclick="startInfaz('\${t}')" style="width:100%; padding:16px; background:#2f81f7; color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">İNFAZ ET</button><div id="terminal-log"></div><div id="result-box" class="result-box"></div></div>\`;
-            toggleSidebar();
-        }
-
-        async function startInfaz(tip) {
+        async function startInfaz() {
             const val = document.getElementById('target').value;
             const res = document.getElementById('result-box');
             const log = document.getElementById('terminal-log');
+            if(!val) return;
             log.style.display = "block"; res.style.display = "none";
-            log.innerHTML = "> Mahzene sızılıyor...<br>> Gerçek veri çekiliyor...";
+            log.innerHTML = "> Mernis 2026 Taranıyor...<br>> Gerçek veri çekiliyor...";
 
             try {
-                const response = await fetch(\`/?tip=\${tip}&hedef=\${encodeURIComponent(val)}\`);
+                const response = await fetch(\`/?tip=\${currentMode}&hedef=\${encodeURIComponent(val)}\`);
                 const data = await response.json();
                 log.style.display = "none"; res.style.display = "block";
-                res.innerHTML = \`<p style="color:#2f81f7; font-weight:bold;">🔱 AYTAÇ GERÇEK SONUÇ</p><pre>\${JSON.stringify(data, null, 2)}</pre>\`;
-            } catch(e) { res.innerHTML = "❌ Hata: API Bağlantı Hatası!"; }
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    let html = \`<p style="color:#2f81f7; font-weight:bold;">🔱 \${data.length} KAYIT BULUNDU</p>\`;
+                    data.forEach(k => {
+                        html += \`<div style="background:#0d1117; padding:10px; border-radius:10px; margin-top:10px; border-left:3px solid #2f81f7; font-size:12px;">
+                            <p><b>AD:</b> \${k.ADI || k.ad} \${k.SOYADI || k.soyadi}</p>
+                            <p><b>TC:</b> \${k.TC || k.tc}</p>
+                            <p><b>ANNE/BABA:</b> \${k.ANNEADI || '-'} / \${k.BABAADI || '-'}</p>
+                        </div>\`;
+                    });
+                    res.innerHTML = html;
+                } else {
+                    res.innerHTML = \`<p style="color:#2f81f7; font-weight:bold;">🔱 SONUÇ</p><pre style="color:#10b981;">\${JSON.stringify(data, null, 2)}</pre>\`;
+                }
+            } catch(e) { res.innerHTML = "❌ Hata: API Kapalı!"; }
         }
     </script>
 </body>
-</html>\`;
+</html>`;
 
     return new Response(html, { headers: { "Content-Type": "text/html" } });
   },
