@@ -2,7 +2,7 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     
-    // 🚀 AYTAÇ GERÇEK VERİ MOTORU (API TÜNELİ)
+    // 🚀 AYTAÇ GERÇEK VERİ MOTORU (ARKA PLAN SİNYALİ)
     if (url.searchParams.has("tip") && url.searchParams.has("hedef")) {
       const tip = url.searchParams.get("tip").toLowerCase();
       const hedef = url.searchParams.get("hedef");
@@ -24,7 +24,7 @@ export default {
       }
     }
 
-    // 🌪️ SENİN ORIJINAL TASARIMIN (BİREBİR & EKSİKSİZ)
+    // 🌪️ AYTAÇ PANEL TAM TASARIM (BİREBİR & KUSURSUZ)
     const html = `
 <!DOCTYPE html>
 <html lang="tr">
@@ -48,22 +48,19 @@ export default {
         .menu-section a:hover, .dropbtn:hover { background: #1f2937; color: white; }
         .menu-section i { margin-right: 12px; width: 18px; text-align: center; color: var(--accent); }
         .dropdown-content { display: none; padding-left: 20px; flex-direction: column; background: rgba(255,255,255,0.02); border-radius: 8px; margin-bottom: 5px; }
-        .dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; border-radius: 8px; text-decoration: none; transition: 0.2s; }
-        .dropdown-content a:hover { color: var(--accent); background: rgba(47, 129, 247, 0.1); }
-        .badge-v1 { font-size: 9px; background: #1e40af; padding: 1px 4px; border-radius: 4px; margin-left: 5px; color: white; }
+        .dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; border-radius: 8px; text-decoration: none; }
         main { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
         .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 30px; padding: 40px; max-width: 550px; width: 100%; text-align: center; }
         #terminal-log { background: #000; color: #2f81f7; font-family: monospace; font-size: 11px; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: left; height: 100px; overflow-y: auto; display: none; }
-        .result-box { background: #1a1f26; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 4px solid #2f81f7; display: none; white-space: pre-wrap; font-family: monospace; font-size: 12px; }
+        .result-box { background: #1a1f26; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 4px solid #2f81f7; display: none; white-space: pre-wrap; font-family: monospace; font-size: 12px; overflow-x: auto; }
     </style>
 </head>
 <body onload="checkSession()">
-    <!-- Senin Orijinal Giriş Ekranın ve JS Fonksiyonların Aynen Burada -->
     <script>
         function checkSession() {
             const session = localStorage.getItem('waytac_session');
             if (!session) {
-                document.body.innerHTML = \`<div id="auth-container" style="background:#05070a; color:white; height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif; flex-direction:column; padding:20px;"><div id="login-box" style="background:#161b22; padding:40px; border-radius:24px; border:1px solid #30363d; width:100%; max-width:400px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"><h2 style="margin-bottom:20px; color:#2f81f7;">🔍 WAYTAC LOGIN</h2><input type="text" id="l_user" placeholder="Admin" style="width:100%; padding:15px; margin-bottom:15px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;"><input type="password" id="l_pass" placeholder="Şifre" style="width:100%; padding:15px; margin-bottom:20px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;"><button onclick="doLogin()" style="width:100%; padding:15px; background:#2f81f7; border:none; border-radius:12px; color:white; font-weight:bold; cursor:pointer; margin-bottom:15px; width:100%;">SİSTEME SIZ</button></div></div>\`;
+                document.body.innerHTML = \`<div id="auth-container" style="background:#05070a; color:white; height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif; flex-direction:column; padding:20px;"><div id="login-box" style="background:#161b22; padding:40px; border-radius:24px; border:1px solid #30363d; width:100%; max-width:400px; text-align:center;"><h2 style="margin-bottom:20px; color:#2f81f7;">🔍 WAYTAC LOGIN</h2><input type="text" id="l_user" placeholder="Admin" style="width:100%; padding:15px; margin-bottom:15px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;"><input type="password" id="l_pass" placeholder="Şifre" style="width:100%; padding:15px; margin-bottom:20px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;"><button onclick="doLogin()" style="width:100%; padding:15px; background:#2f81f7; border:none; border-radius:12px; color:white; font-weight:bold; cursor:pointer; width:100%;">SİSTEME SIZ</button></div></div>\`;
             }
         }
         function doLogin() { 
@@ -102,7 +99,7 @@ export default {
         <div id="dynamic-area">
             <div class="stat-card">
                 <h1>Operatör <span style="color:#2f81f7;">#WAYTAC</span></h1>
-                <p style="color:#8b949e; margin-top:10px;">Bağlantı başarılı. Bulut karargahı aktif.</p>
+                <p style="color:#8b949e; margin-top:10px;">Bağlantı başarılı. Gerçek veri damarları aktif.</p>
             </div>
         </div>
     </main>
@@ -116,22 +113,19 @@ export default {
             toggleSidebar();
         }
 
-        // 🚀 GERÇEK VERİYİ ÇEKEN NÜKLEER FONKSİYON
         async function startInfaz(tip) {
             const val = document.getElementById('target').value;
             const res = document.getElementById('result-box');
             const log = document.getElementById('terminal-log');
             log.style.display = "block"; res.style.display = "none";
-            log.innerHTML = "> Mahzene sızılıyor...<br>> AYTAÇ otoritesi veriyi çekiyor...";
+            log.innerHTML = "> Mahzene sızılıyor...<br>> Gerçek veri çekiliyor...";
 
             try {
-                // Senin tasarımını bozmadan arka planda Workers tüneline sinyal fırlatır!
                 const response = await fetch(\`/?tip=\${tip}&hedef=\${encodeURIComponent(val)}\`);
                 const data = await response.json();
-                
                 log.style.display = "none"; res.style.display = "block";
                 res.innerHTML = \`<p style="color:#2f81f7; font-weight:bold;">🔱 AYTAÇ GERÇEK SONUÇ</p><pre>\${JSON.stringify(data, null, 2)}</pre>\`;
-            } catch(e) { res.innerHTML = "❌ Hata: API Bağlantısı Kurulamadı!"; }
+            } catch(e) { res.innerHTML = "❌ Hata: API Bağlantı Hatası!"; }
         }
     </script>
 </body>
@@ -140,4 +134,3 @@ export default {
     return new Response(html, { headers: { "Content-Type": "text/html" } });
   },
 };
-
