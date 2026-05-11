@@ -4,70 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAYTAC | Komuta Merkezi</title>
-    <link rel="icon" href="https://icons8.com" type="image/x-icon">
     <link rel="stylesheet" href="https://cloudflare.com">
-    
-    <script>
-        // 1. OTURUM, KAYIT VE YETKİ MOTORU
-        function checkSession() {
-            const session = localStorage.getItem('waytac_session');
-            if (!session) {
-                document.body.innerHTML = `
-                <div id="auth-container" style="background:#05070a; color:white; height:100vh; display:flex; align-items:center; justify-content:center; font-family:sans-serif; flex-direction:column; padding:20px;">
-                    <div id="login-box" style="background:#161b22; padding:40px; border-radius:24px; border:1px solid #30363d; width:100%; max-width:400px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                        <h2 style="margin-bottom:20px; color:#2f81f7;">🔍 WAYTAC LOGIN</h2>
-                        <input type="text" id="l_user" placeholder="Admin veya E-posta" style="width:100%; padding:15px; margin-bottom:15px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;">
-                        <input type="password" id="l_pass" placeholder="Şifre" style="width:100%; padding:15px; margin-bottom:20px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;">
-                        <button onclick="doLogin()" style="width:100%; padding:15px; background:#2f81f7; border:none; border-radius:12px; color:white; font-weight:bold; cursor:pointer; margin-bottom:15px; width:100%;">SİSTEME SIZ</button>
-                        <span onclick="toggleAuth()" style="color:#8b949e; cursor:pointer; font-size:13px;">Hesabın yok mu? <b style="color:#2f81f7;">Kayıt Ol</b></span>
-                    </div>
-                    <div id="reg-box" style="display:none; background:#161b22; padding:40px; border-radius:24px; border:1px solid #30363d; width:100%; max-width:400px; text-align:center;">
-                        <h2 style="margin-bottom:20px; color:#2f81f7;">📧 E-POSTA KAYIT</h2>
-                        <input type="email" id="r_email" placeholder="E-posta Adresiniz" style="width:100%; padding:15px; margin-bottom:15px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;">
-                        <input type="password" id="r_pass" placeholder="Şifre Belirleyin" style="width:100%; padding:15px; margin-bottom:20px; background:#0d1117; border:1px solid #30363d; border-radius:12px; color:white; outline:none;">
-                        <button onclick="doRegister()" style="width:100%; padding:15px; background:#2f81f7; border:none; border-radius:12px; color:white; font-weight:bold; cursor:pointer; margin-bottom:15px; width:100%;">KAYDI TAMAMLA</button>
-                        <span onclick="toggleAuth()" style="color:#8b949e; cursor:pointer; font-size:13px;">Geri dön: <b style="color:#2f81f7;">Giriş Yap</b></span>
-                    </div>
-                </div>`;
-            } else if (session === 'waytac') {
-                const adminLink = document.getElementById('admin-only-link');
-                if(adminLink) adminLink.style.display = 'flex';
-            }
-        }
-
-        function toggleAuth() { const lb = document.getElementById('login-box'); const rb = document.getElementById('reg-box'); lb.style.display = lb.style.display === 'none' ? 'block' : 'none'; rb.style.display = rb.style.display === 'none' ? 'block' : 'none'; }
-        function doRegister() { const e = document.getElementById('r_email').value; const p = document.getElementById('r_pass').value; if(e && p) { localStorage.setItem('u_data_'+e, p); alert("✅ Kayıt başarılı!"); toggleAuth(); } }
-        function doLogin() { 
-            const u = document.getElementById('l_user').value; const p = document.getElementById('l_pass').value;
-            if((u === "waytac" && p === "aytac1235") || (localStorage.getItem('u_data_'+u) === p)) { localStorage.setItem('waytac_session', u); location.reload(); } else { alert("❌ Hatalı Giriş!"); }
-        }
-    </script>
-
     <style>
         :root { --bg: #05070a; --sidebar: #0a0d14; --accent: #2f81f7; --text: #8b949e; --card: #10141c; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: white; font-family: sans-serif; display: flex; overflow-x: hidden; min-height: 100vh; }
-        .menu-toggle { position: fixed; top: 25px; left: 25px; background: var(--accent); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; z-index: 2000; box-shadow: 0 0 15px rgba(47,129,247,0.5); }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; overflow-x: hidden; min-height: 100vh; }
+        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .auth-box { background: var(--card); padding: 40px; border-radius: 24px; border: 1px solid #30363d; width: 90%; max-width: 400px; text-align: center; }
+        .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; border-radius: 12px; color: white; outline: none; }
+        .auth-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; }
+        .menu-toggle { position: fixed; top: 25px; left: 25px; background: var(--accent); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; z-index: 2000; }
         .sidebar { width: 280px; height: 100vh; background: var(--sidebar); position: fixed; left: -280px; top: 0; border-right: 1px solid #1e293b; padding: 25px; z-index: 1500; transition: 0.3s; overflow-y: auto; }
         .sidebar.active { left: 0; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1400; backdrop-filter: blur(5px); }
         .overlay.active { display: block; }
         .logo { font-size: 22px; font-weight: 800; margin-bottom: 35px; margin-top: 50px; text-align: center; }
         .logo span { color: var(--accent); }
-        .menu-section a, .dropbtn { display: flex; align-items: center; width: 100%; padding: 12px; color: var(--text); text-decoration: none; border-radius: 10px; background: none; border: none; cursor: pointer; font-size: 14px; margin-bottom: 2px; text-align: left; }
-        .menu-section a:hover, .dropbtn:hover { background: #1f2937; color: white; }
-        .menu-section i { margin-right: 12px; width: 18px; text-align: center; color: var(--accent); }
-        .dropdown-content { display: none; padding-left: 20px; flex-direction: column; background: rgba(255,255,255,0.02); border-radius: 8px; margin-bottom: 5px; }
-        .dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; border-radius: 8px; text-decoration: none; transition: 0.2s; }
-        .dropdown-content a:hover { color: var(--accent); background: rgba(47, 129, 247, 0.1); }
-        .badge-v1 { font-size: 9px; background: #1e40af; padding: 1px 4px; border-radius: 4px; margin-left: 5px; color: white; }
+        .menu-section p { font-size: 10px; color: #444; margin: 15px 0 5px 10px; text-transform: uppercase; font-weight: bold; }
+        .menu-item, .dropbtn { display: flex; align-items: center; width: 100%; padding: 12px; color: var(--text); text-decoration: none; border-radius: 10px; background: none; border: none; cursor: pointer; font-size: 14px; margin-bottom: 2px; text-align: left; }
+        .menu-item:hover, .dropbtn:hover { background: #1f2937; color: white; }
+        .menu-item i, .dropbtn i { margin-right: 12px; width: 18px; text-align: center; color: var(--accent); }
+        .dropdown-content { display: none; padding-left: 20px; flex-direction: column; background: rgba(255,255,255,0.02); border-radius: 8px; }
+        .dropdown-content a { font-size: 13px; color: #64748b; padding: 10px; border-radius: 8px; text-decoration: none; }
         main { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
         .stat-card { background: var(--card); border: 1px solid #30363d; border-radius: 30px; padding: 40px; max-width: 550px; width: 100%; text-align: center; }
-        #terminal-log { background: #000; color: #2f81f7; font-family: monospace; font-size: 11px; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: left; height: 100px; overflow-y: auto; display: none; }
-        .result-box { background: #1a1f26; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 4px solid #2f81f7; display: none; }
+        #terminal-log { background: #000; color: #2f81f7; font-family: monospace; font-size: 12px; padding: 15px; border-radius: 12px; margin-top: 20px; text-align: left; height: 120px; overflow-y: auto; display: none; border: 1px solid #1e293b; }
+        .result-box { background: #1a1f26; padding: 20px; border-radius: 15px; margin-top: 20px; text-align: left; border-left: 4px solid var(--accent); display: none; overflow-x: auto; white-space: pre-wrap; font-size: 13px; }
     </style>
 </head>
-<body onload="checkSession()">
+<body>
+
+    <div id="auth-overlay">
+        <div class="auth-box">
+            <h2 style="color:var(--accent); margin-bottom:25px;">🔱 AYTAÇ LOGIN</h2>
+            <input type="text" id="l_user" class="auth-input" placeholder="Operatör">
+            <input type="password" id="l_pass" class="auth-input" placeholder="Mühür">
+            <button onclick="doLogin()" class="auth-btn">SİSTEME SIZ</button>
+        </div>
+    </div>
 
     <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
@@ -75,111 +49,101 @@
     <div class="sidebar" id="sidebar">
         <div class="logo">🔍 WAYTAC <span>PANEL</span></div>
         <div class="menu-section">
-            <a href="#" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
-            <a href="#" id="admin-only-link" onclick="showLogs()" style="display:none;"><i class="fas fa-history"></i> Log Kayıtları</a>
-            <a href="#" onclick="localStorage.removeItem('waytac_session'); location.reload();"><i class="fas fa-power-off"></i> Çıkış Yap</a>
-        </div>
-
-        <div class="menu-section">
-            <p style="font-size:10px; color:#444; margin:15px 0 5px 10px; text-transform:uppercase; font-weight:bold;">Siber İstihbarat</p>
-            
-            <!-- 1. MERNIS 2026 -->
+            <a href="#" class="menu-item" onclick="location.reload()"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <p>Mernis 2026</p>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-fingerprint"></i> Mernis 2026 <i class="fas fa-chevron-right" style="margin-left:auto"></i></button>
+                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-fingerprint"></i> Kimlik <i class="fas fa-chevron-down" style="margin-left:auto"></i></button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Ad Soyad', 'İsim Soyisim')">• Ad Soyad Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Ad Soyad Kapsamlı', 'İsim Soyisim')">• Ad Soyad Kapsamlı <span class="badge-v1">V1</span></a>
-                    <a href="#" onclick="showSorgu('TC Kimlik', 'T.C. No')">• TC Kimlik Sorgulama</a>
-                    <a href="#" onclick="showSorgu('TC Pro', 'T.C. No')">• TC Pro Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Vergi Dairesi', 'Vergi No / TC')">• Vergi Dairesi Sorgula</a>
-                    <a href="#" onclick="showSorgu('Medeni Hal', 'T.C. No')">• Medeni Hal Sorgulama</a>
+                    <a href="#" onclick="showSorgu('tc', '11 Haneli T.C.')">• TC Sorgu</a>
+                    <a href="#" onclick="showSorgu('adsoyad', 'Ad Soyad')">• Ad Soyad</a>
                 </div>
             </div>
-
-            <!-- 2. AILE ÇÖZÜMLERİ -->
+            <p>İstihbarat</p>
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-users"></i> Aile Çözümleri <i class="fas fa-chevron-right" style="margin-left:auto"></i></button>
+                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-users"></i> Aile & Soy <i class="fas fa-chevron-down" style="margin-left:auto"></i></button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Aile', 'T.C. No')">• Aile Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Sülale', 'T.C. No')">• Sülale Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Anne Tarafı', 'T.C. No')">• Anne Tarafı Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Baba Tarafı', 'T.C. No')">• Baba Tarafı Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Eş Sorgu', 'T.C. No')">• Eş Sorgulama</a>
+                    <a href="#" onclick="showSorgu('sulale', 'T.C. No')">• Sülale Sorgu</a>
+                    <a href="#" onclick="showSorgu('isyeri', 'T.C. No')">• İşyeri Sorgu</a>
                 </div>
             </div>
-
-            <!-- 3. GSM ÇÖZÜMLERİ -->
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-phone-alt"></i> GSM Çözümleri <i class="fas fa-chevron-right" style="margin-left:auto"></i></button>
+                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-phone-alt"></i> GSM <i class="fas fa-chevron-down" style="margin-left:auto"></i></button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('GSM TC', 'Telefon No')">• GSM TC Sorgulama</a>
-                    <a href="#" onclick="showSorgu('TC GSM', 'T.C. No')">• TC GSM Sorgulama</a>
+                    <a href="#" onclick="showSorgu('gsmtc', 'GSM (0 olmadan)')">• GSM -> TC</a>
+                    <a href="#" onclick="showSorgu('tcgsm', 'T.C. No')">• TC -> GSM</a>
                 </div>
             </div>
-
-            <!-- 4. ADRES ÇÖZÜMLERİ -->
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDrop(this)"><i class="fas fa-map-marked-alt"></i> Adres Çözümleri <i class="fas fa-chevron-right" style="margin-left:auto"></i></button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="showSorgu('Adres', 'T.C. No')">• Adres Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Bina', 'Bina ID')">• Bina Sorgulama</a>
-                    <a href="#" onclick="showSorgu('Köy Mahalle', 'Köy/Mahalle Adı')">• Köy Mahalle Sorgulama</a>
-                </div>
-            </div>
-
-            <a href="#" style="color: #fbbf24; font-weight:bold;"><i class="fas fa-crown"></i> VIP Operasyon</a>
+            <a href="#" class="menu-item" style="color:#ef4444; margin-top:20px;" onclick="localStorage.removeItem('waytac_session'); location.reload();"><i class="fas fa-power-off"></i> Bağlantıyı Kes</a>
         </div>
     </div>
 
     <main>
         <div id="dynamic-area">
             <div class="stat-card">
-                <h1>Operatör <span style="color:#2f81f7;">#WAYTAC</span></h1>
-                <p style="color:#8b949e; margin-top:10px;">Bağlantı başarılı. Tüm sorgu odacıkları aktif edildi.</p>
+                <h1>Operatör <span style="color:var(--accent);">#AYTAÇ</span></h1>
+                <p style="color:var(--text); margin-top:10px;">Karargah aktif. arastir.sbs tünelleri sarsılmaz birer hızla mühürlendi.</p>
                 <div style="display:flex; gap:15px; margin-top:30px;">
-                    <div style="background:#1f2937; padding:15px; border-radius:15px; flex:1;"><span style="color:#2f81f7; font-size:12px; display:block;">Durum</span><span style="font-size:18px; font-weight:bold; color:#10b981;">ONLINE</span></div>
-                    <div style="background:#1f2937; padding:15px; border-radius:15px; flex:1;"><span style="color:#2f81f7; font-size:12px; display:block;">İşlem</span><span id="log-count" style="font-size:18px; font-weight:bold;">0</span></div>
+                    <div style="background:#1f2937; padding:15px; border-radius:15px; flex:1;"><span style="color:var(--accent); font-size:12px; display:block;">Durum</span><span style="font-size:18px; font-weight:bold; color:#10b981;">ONLINE</span></div>
+                    <div style="background:#1f2937; padding:15px; border-radius:15px; flex:1;"><span style="color:var(--accent); font-size:12px; display:block;">API</span><span style="font-size:18px; font-weight:bold;">ARASTIR.SBS</span></div>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
+        const API_BASE = "https://arastir.sbs";
+
+        function doLogin() {
+            if(document.getElementById('l_user').value === "waytac" && document.getElementById('l_pass').value === "aytac1235") {
+                localStorage.setItem('waytac_session', 'waytac');
+                document.getElementById('auth-overlay').style.display = 'none';
+            } else { alert("❌ Mühür Reddedildi!"); }
+        }
+        if(localStorage.getItem('waytac_session')) document.getElementById('auth-overlay').style.display = 'none';
+
         function toggleSidebar() { document.getElementById("sidebar").classList.toggle("active"); document.getElementById("overlay").classList.toggle("active"); }
         function toggleDrop(btn) { const content = btn.nextElementSibling; content.style.display = content.style.display === 'flex' ? 'none' : 'flex'; }
         
         function showSorgu(t, p) {
-            document.getElementById('dynamic-area').innerHTML = `<div class="stat-card"><h2 style="color:#2f81f7;">${t.toUpperCase()} SİSTEMİ</h2><input type="text" id="target" placeholder="${p}..." style="width:100%; padding:16px; margin:20px 0; background:#0d1117; border:1px solid #334155; color:white; border-radius:12px; outline:none; text-align:center;"><button onclick="startInfaz('${t}')" style="width:100%; padding:16px; background:#2f81f7; color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">İNFAZ ET</button><div id="terminal-log"></div><div id="result-box" class="result-box"></div></div>`;
+            document.getElementById('dynamic-area').innerHTML = `
+            <div class="stat-card">
+                <h2 style="color:var(--accent);">${t.toUpperCase()} SORGULAMA</h2>
+                <input type="text" id="target" placeholder="${p}..." style="width:100%; padding:16px; margin:20px 0; background:#0d1117; border:1px solid #334155; color:white; border-radius:12px; outline:none; text-align:center;">
+                <button onclick="startInfaz('${t}')" style="width:100%; padding:16px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">İNFAZ ET</button>
+                <div id="terminal-log"></div><div id="result-box" class="result-box"></div>
+            </div>`;
             toggleSidebar();
         }
 
-        function startInfaz(tip) {
+        async function startInfaz(tip) {
             const val = document.getElementById('target').value;
-            if(!val) return alert("Veri girişi yapın!");
+            if(!val) return alert("HEDEF BOŞ!");
             const logArea = document.getElementById('terminal-log');
             const res = document.getElementById('result-box');
             logArea.style.display = "block"; res.style.display = "none";
-            logArea.innerHTML = "> Veri katmanları deşifre ediliyor...<br>";
+            logArea.innerHTML = `> arastir.sbs tüneli açılıyor...<br>> AYTAÇ otoritesi mahzene sızıyor...<br>> Veri deşifre ediliyor...`;
 
-            setTimeout(() => {
-                logArea.style.display = "none"; res.style.display = "block";
-                const fakeTC = Math.floor(10000000000 + Math.random() * 90000000000);
-                res.innerHTML = `<p style="color:#2f81f7; font-weight:bold; margin-bottom:10px; border-bottom:1px solid #334155;">🎯 ANALİZ SONUCU</p><p><b>TC:</b> ${fakeTC}</p><p><b>HEDEF:</b> ${val}</p><p><b>DURUM:</b> <span style="color:#10b981;">AKTİF</span></p>`;
-                
-                // LOGLARI KAYDET (Sadece admin görebilir)
-                const logs = JSON.parse(localStorage.getItem('waytac_logs') || "[]");
-                logs.push({ user: localStorage.getItem('waytac_session'), date: new Date().toLocaleString(), type: tip, target: val });
-                localStorage.setItem('waytac_logs', JSON.stringify(logs));
-                document.getElementById('log-count').innerText = logs.length;
-            }, 2000);
-        }
+            let url = `${API_BASE}${tip}.php?`;
+            if(tip === 'adsoyad') {
+                const parts = val.split(' ');
+                url += `adi=${parts[0]}&soyadi=${parts[1] || ''}`;
+            } else if(tip === 'gsmtc') {
+                url += `gsm=${val}`;
+            } else {
+                url += `tc=${val}`;
+            }
 
-        function showLogs() {
-            if (localStorage.getItem('waytac_session') !== 'waytac') return alert("YETKİSİZ ERİŞİM!");
-            const logs = JSON.parse(localStorage.getItem('waytac_logs') || "[]");
-            let tableRows = logs.reverse().map(l => `<tr><td style="padding:10px; border-bottom:1px solid #1e293b;">${l.date}</td><td style="padding:10px; border-bottom:1px solid #1e293b;">${l.type}</td><td style="padding:10px; border-bottom:1px solid #1e293b;">${l.target}</td></tr>`).join("");
-            document.getElementById('dynamic-area').innerHTML = `<div class="stat-card" style="max-width:800px;"><h2 style="color:#2f81f7; margin-bottom:20px;">📜 OPERASYON LOGLARI</h2><table style="width:100%; font-size:11px; text-align:left;"><thead><tr style="color:var(--accent)"><th>Tarih</th><th>İşlem</th><th>Hedef</th></tr></thead><tbody>${tableRows || "<td>Kayıt yok.</td>"}</tbody></table><button onclick="localStorage.removeItem('waytac_logs'); location.reload();" style="margin-top:20px; background:#ef4444; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;">LOGLARI TEMİZLE</button></div>`;
-            toggleSidebar();
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                setTimeout(() => {
+                    logArea.style.display = "none"; res.style.display = "block";
+                    res.innerHTML = `<p style="color:var(--accent); font-weight:bold; border-bottom:1px solid #334155;">🔱 AYTAÇ SORGU SONUCU</p><pre>${JSON.stringify(data, null, 2)}</pre>
+                    <button onclick="window.open('https://whatsapp.com{val}&text=🔱%20AYTAÇ%20TARAFINDAN%20İNFAZ%20EDİLDİN%20🔱%20${"%E1%9A%9B".repeat(1000)}', '_blank')" style="margin-top:15px; width:100%; padding:12px; background:#ef4444; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">🔥 TRAVA MERMİSİNİ ATEŞLE 🔥</button>`;
+                }, 2000);
+            } catch(e) {
+                logArea.innerHTML += "<br>❌ Sinyal Kesildi! API Bağlantı Hatası.";
+            }
         }
     </script>
 </body>
